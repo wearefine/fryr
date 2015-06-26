@@ -10,7 +10,7 @@ Filter out your hash!
 
 ## Functions
 
-### `init`
+### `Grinder.init`
 
 | Arg | Type |
 |---|---|
@@ -27,7 +27,7 @@ function myFilteringCallbackFunction(params) {
 Grinder.init(myFilteringCallbackFunction);
 ```
 
-### `update`
+### `Grinder.update`
 
 | Arg | Type | Description |
 |---|---|---|
@@ -38,7 +38,7 @@ Grinder.init(myFilteringCallbackFunction);
 
 The Read/Write meat and potatoes of Grinder, this modifies the hash to your explicit purposes.
 
-### `param`
+### `Grinder.param`
 
 | Arg | Type | Description |
 |---|---|---|
@@ -53,12 +53,12 @@ Query a key in the hash directly, and don't even bother re-parsing it. In just a
 Grinder.param('color') // => 'blue'
 ```
 
-### `parse`
+### `Grinder.parse`
 
 Update Grinder's `Grinder.params` object with a fresh batch of updated key/values. This occurs on every `hashChange` event anyway, but sometimes you just want to be *that guy*.
 
 ## Access
 
-### `.params`
+### `Grinder.params`
 
 Grab the key/value hash of the parsed version of `window.location.hash`.
