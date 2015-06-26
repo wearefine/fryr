@@ -5,14 +5,8 @@ Filter out your hash!
 ## Quick Start
 
 1. `//= require grinder`
-2. Call `Grinder.init(myFilteringCallback)` where `myFilteringCallback` is a function that looks like
-
-```javascript
-function myFilteringCallback(params) {
-  console.table(params);
-};
-```
-3. PROFIT BYAH
+1. Call `Grinder.init` with a callback function
+1. PROFIT BYAH
 
 ## Functions
 
@@ -23,6 +17,15 @@ function myFilteringCallback(params) {
 | `hashChangeCallback` | function |
 
 The `hashChangeCallback` executes everytime the hash is changed. Commonly, this function updates the view and regenerates filtered items, uncommonly, it is used to print frustrated messages to the console, and very rarely it is used to sort the recyclables. It accepts one argument - the new params that have been parsed.
+
+**Example**
+
+```javascript
+function myFilteringCallbackFunction(params) {
+  console.table(params);
+};
+Grinder.init(myFilteringCallbackFunction);
+```
 
 ### `update`
 
@@ -53,3 +56,9 @@ Grinder.param('color') // => 'blue'
 ### `parse`
 
 Update Grinder's `Grinder.params` object with a fresh batch of updated key/values. This occurs on every `hashChange` event anyway, but sometimes you just want to be *that guy*.
+
+## Access
+
+### `.params`
+
+Grab the key/value hash of the parsed version of `window.location.hash`.
