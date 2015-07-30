@@ -5,12 +5,10 @@ Filter out your hash!
 ## Quick Start
 
 1. `//= require grinder`
-1. Call `Grinder.init` with a callback function
+1. Call `new Grinder` with a callback function
 1. PROFIT BYAH
 
-## Functions
-
-### `Grinder.init`
+## Initialization
 
 | Arg | Type |
 |---|---|
@@ -24,10 +22,13 @@ The `hashChangeCallback` executes everytime the hash is changed. Commonly, this 
 function myFilteringCallbackFunction(params) {
   console.table(params);
 };
-Grinder.init(myFilteringCallbackFunction);
+var grind = new Grinder(myFilteringCallbackFunction);
 ```
 
-### `Grinder.update`
+## Functions
+
+
+### `.update`
 
 | Arg | Type | Description |
 |---|---|---|
@@ -38,7 +39,7 @@ Grinder.init(myFilteringCallbackFunction);
 
 The Read/Write meat and potatoes of Grinder, this modifies the hash to your explicit purposes.
 
-### `Grinder.param`
+### `.param`
 
 | Arg | Type | Description |
 |---|---|---|
@@ -50,15 +51,15 @@ Query a key in the hash directly, and don't even bother re-parsing it. In just a
 
 ```javascript
 // window.location.hash is '?color=blue'
-Grinder.param('color') // => 'blue'
+grind.param('color') // => 'blue'
 ```
 
-### `Grinder.parse`
+### `.parse`
 
 Update Grinder's `Grinder.params` object with a fresh batch of updated key/values. This occurs on every `hashChange` event anyway, but sometimes you just want to be *that guy*.
 
 ## Access
 
-### `Grinder.params`
+### `.params`
 
 Grab the key/value hash of the parsed version of `window.location.hash`.
