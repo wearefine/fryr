@@ -67,6 +67,8 @@ function Grinder(callback) {
     var key_search = new RegExp('[?&]' + key + '=', 'g');
 
     hash = hash.replace(key_search, '');
+    // if initial key removed, replace ampersand with question
+    hash = hash.replace('#&', '#?');
 
     window.location.hash = hash;
   }
@@ -208,7 +210,6 @@ function Grinder(callback) {
 
       return this.params;
     },
-
 
     /**
     * @function param - retrieve a key's value
