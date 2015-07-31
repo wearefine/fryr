@@ -30,12 +30,12 @@ var grind = new Grinder(myFilteringCallbackFunction);
 
 ### `.update`
 
-| Arg | Type | Description |
-|---|---|---|
-| `key` | string | param key to query against |
-| `value` | mixed | value for param key |
-| `key_is_required` | boolean | if the key is not required, it will be removed from the hash (defaults to false) |
-| `should_replace_value` | boolean | if false, value will be appended to the key (defaults to false) |
+| Arg | Type | Default | Description |
+|---|---|---|---|
+| `key` | string | <required> | param key to query against |
+| `value` | mixed | <required> | value for param key |
+| `key_is_required` | boolean | false | if the key is not required, it will be removed from the hash |
+| `should_replace_value` | boolean | false | if false, value will be appended to the key |
 
 The Read/Write meat and potatoes of Grinder, this modifies the hash to your explicit purposes.
 
