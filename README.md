@@ -51,7 +51,7 @@ Query a key in the hash directly, and don't even bother re-parsing it. In just a
 
 ```javascript
 // window.location.hash is '?color=blue'
-grinder.param('color') // => 'blue'
+grind.param('color') // => 'blue'
 ```
 
 ### `.paramPresent`
