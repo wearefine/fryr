@@ -67,6 +67,7 @@ function Grinder(callback) {
     var key_search = new RegExp('[?&]' + key + '=', 'g');
 
     hash = hash.replace(key_search, '');
+
     window.location.hash = hash;
   }
 
@@ -188,6 +189,9 @@ function Grinder(callback) {
       var hash = window.location.hash;
       var params;
 
+      // clear zombie keys and values
+      this.params = {};
+
       if(window.location.hash && /\?/g.test(hash)) {
         params = hash.split('?')[1];
         params = params.split('&');
@@ -212,10 +216,20 @@ function Grinder(callback) {
     * @example
     *   window.location.hash = ?color=blue
     *   grinder.param('color') // => 'blue'
-    * @return the value of the key
+    * @return {string} the value of the key
     */
     param: function(key) {
       return param(key);
+    },
+
+    /**
+    * @function paramPresent - determine if param is blank or undefined
+    * @param {string} key - param to target
+    * @return boolean
+    */
+    paramPresent: function(key) {
+      var value = this.params[key];
+      return (typeof value !== 'undefined' && value !== '');
     },
 
   };

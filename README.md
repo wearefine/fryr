@@ -45,13 +45,34 @@ The Read/Write meat and potatoes of Grinder, this modifies the hash to your expl
 |---|---|---|
 | `key` | string | the param to query |
 
-Query a key in the hash directly, and don't even bother re-parsing it. In just about every instance, accessing `Grinder.params.key` **is the better decision here**.
+Query a key in the hash directly, and don't even bother re-parsing it. In just about every instance, accessing `.params.<key>` **is the better decision here**.
 
 **Example**
 
 ```javascript
 // window.location.hash is '?color=blue'
-grind.param('color') // => 'blue'
+grinder.param('color') // => 'blue'
+```
+
+### `.paramPresent`
+
+| Arg | Type | Description |
+|---|---|---|
+| `key` | string | the param to query |
+
+Determine if a param exists or has a blank value.
+
+**Example**
+
+```javascript
+// window.location.hash is '?color=blue'
+grind.paramPresent('color') // => true
+
+// window.location.hash is '?color='
+grind.paramPresent('color') // => false
+
+// window.location.hash is '?animal=bird'
+grind.paramPresent('color') // => false
 ```
 
 ### `.parse`
