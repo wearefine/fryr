@@ -262,5 +262,50 @@ describe('Grinder', function() {
 
   });
 
+  describe('.convert()', function() {
+
+    it('should convert single object to string', function() {
+      var obj = { 'character' : 'nemo' };
+      var str = grind.convert(obj);
+
+      expect(str).toEqual('?character=nemo');
+    });
+
+    it('should convert object to string', function() {
+      var obj = { 'character' : 'nemo', 'location' : 'dentist' };
+      var str = grind.convert(obj);
+
+      expect(str).toEqual('?character=nemo&location=dentist');
+    });
+
+    it('should convert object with an array to string', function() {
+      var obj = { 'character' : ['nemo', 'dory', 'marlin'], 'location' : 'dentist' };
+      var str = grind.convert(obj);
+
+      expect(str).toEqual('?character=nemo,dory,marlin&location=dentist');
+    });
+
+  });
+
+  describe('.merge()', function() {
+
+    it('should replace entire hash when replace_all is true', function() {
+      window.location.hash = '#?location=dentist';
+      var obj = { 'character' : 'nemo' };
+      var str = grind.merge(obj, true);
+
+      expect(str).toEqual('?character=nemo');
+    });
+
+    it('should replace only specific hash values', function() {
+      window.location.hash = '#?location=dentist&character=nemo';
+      var obj = { 'character' : 'dory' };
+      var str = grind.merge(obj);
+
+      expect(str).toEqual('?location=dentist&character=dory');
+    });
+
+  });
+
 
 });
