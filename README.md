@@ -1,6 +1,17 @@
 # Fryr
 
-Filter out your hash!
+Fryr is the fry cook you never knew you needed to turn that ugly frozen hash into pretty, delectable params. Not only does it make accessible params to use on the client-side, it also adds, removes, and updates them.
+
+```javascript
+'http://psherman.com/#?tankhood=gill,deb,bloat'
+fry.params
+// => { 'tankhood' => 'gill,deb,bloat' }
+
+fry.update('tankhood', 'nemo')
+// => 'http://psherman.com/#?tankhood=gill,deb,bloat,nemo'
+```
+
+*Examples shown after initiliazation
 
 ## Quick Start
 
@@ -32,10 +43,10 @@ var fry = new Fryr(myFilteringCallbackFunction);
 
 | Arg | Type | Default | Description |
 |---|---|---|---|
-| `key` | string | <required> | param key to query against |
-| `value` | mixed | <required> | value for param key |
-| `key_is_required` | boolean | false | if the key is not required, it will be removed from the hash |
-| `should_replace_value` | boolean | false | if false, value will be appended to the key |
+| `key` | string |  | param key to query against |
+| `value` | mixed |  | value for param key |
+| `key_is_required` | boolean | `false` | if the key is not required, it will be removed from the hash |
+| `should_replace_value` | boolean | `false` | if false, value will be appended to the key |
 
 The Read/Write meat and potatoes of Fryr, this modifies the hash to your explicit purposes.
 
@@ -50,8 +61,9 @@ Query a key in the hash directly, and don't even bother re-parsing it. In just a
 **Example**
 
 ```javascript
-// window.location.hash is '?color=blue'
-fry.param('color') // => 'blue'
+// http://psherman.com/#?can_speak_whale=dory
+fry.param('can_speak_whale')
+// => 'dory'
 ```
 
 ### `.paramPresent`
@@ -65,19 +77,64 @@ Determine if a param exists or has a blank value.
 **Example**
 
 ```javascript
-// window.location.hash is '?color=blue'
-fry.paramPresent('color') // => true
+// http://psherman.com/#?boat=touched
+fry.paramPresent('boat')
+// => true
 
-// window.location.hash is '?color='
-fry.paramPresent('color') // => false
+// http://psherman.com/#?boat=
+fry.paramPresent('boat')
+// => false
 
-// window.location.hash is '?animal=bird'
-fry.paramPresent('color') // => false
+// http://psherman.com/#?bomb=touched
+fry.paramPresent('boat')
+// => false
 ```
 
 ### `.parse`
 
-Update Fryr's `Fryr.params` object with a fresh batch of updated key/values. This occurs on every `hashChange` event anyway, but sometimes you just want to be *that guy*.
+Update Fryr's `Fryr.params` object with a fresh batch of updated key/values. This occurs on every `hashChange` event anyway, but sometimes you just want to be *that guy*. Returns object.
+
+### `.convert`
+
+Turn a JSON object into a string. Returns a string or false if the param is not an object or a string.
+
+| Arg | Type | Description |
+|---|---|---|
+| `obj` | object OR string | object to convert |
+
+**Example**
+
+```javascript
+var obj = { 'support_group' : ['bruce', 'anchor', 'chum'], 'location' : 'submarine' };
+
+fry.convert(obj);
+// => '?support_group=bruce,anchor,chum&location=submarine
+```
+
+### `.merge`
+
+Wipe out or selectively replace keys and values. Returns a string but also updates the hash.
+
+
+| Arg | Type | Default | Description |
+|---|---|---|---|
+| `obj` | object OR string |  | query to replace |
+| `replace_all` | boolean | `false` | blast existing params away or replace only changed keys
+
+**Example**
+
+```javascript
+
+// http://psherman.com/#?destination=sydney&directions=over_the_trench
+var obj = { 'directions' : 'through_the_trench' };
+fry.merge(obj);
+// => http://psherman.com/#?destination=sydney&directions=through_the_trench
+
+// http://psherman.com/#?destination=sydney
+var obj = { 'directions' : 'through_the_trench' };
+fry.merge(obj, true);
+// => http://psherman.com/#?directions=through_the_trench
+```
 
 ## Access
 
