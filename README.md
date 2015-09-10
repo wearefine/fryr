@@ -13,8 +13,6 @@ fry.update('tankhood', 'nemo');
 // => ...com/#?tankhood=gill,deb,bloat,nemo
 ```
 
-*Examples shown after initiliazation
-
 ## Quick Start
 
 1. `//= require fryr`
@@ -159,7 +157,7 @@ Turn a JSON object into a string. Returns a string (without leading `#`) or fals
 var obj = { 'support_group' : ['bruce', 'anchor', 'chum'], 'location' : 'submarine' };
 
 fry.convert(obj);
-// => '?support_group=bruce,anchor,chum&location=submarine
+// => '?support_group=bruce,anchor,chum&location=submarine'
 ```
 
 ### `.merge`
@@ -176,19 +174,19 @@ Wipe out or selectively replace keys and values. Returns a string but also updat
 
 ```javascript
 
-// http://psherman.com/#?destination=sydney&directions=over_the_trench
+// /#?destination=sydney&directions=over_the_trench
 var obj = { 'directions' : 'through_the_trench' };
 fry.merge(obj);
-// => http://psherman.com/#?destination=sydney&directions=through_the_trench
+// => /#?destination=sydney&directions=through_the_trench
 ```
 
 **With `replace_all`**
 
 ```javascript
-// http://psherman.com/#?destination=sydney
+// /#?destination=sydney
 var obj = { 'directions' : 'through_the_trench' };
 fry.merge(obj, true);
-// => http://psherman.com/#?directions=through_the_trench
+// => /#?directions=through_the_trench
 ```
 
 ## Access
