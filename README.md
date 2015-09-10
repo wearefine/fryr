@@ -1,11 +1,11 @@
-# Grinder
+# Fryr
 
 Filter out your hash!
 
 ## Quick Start
 
-1. `//= require grinder`
-1. Call `new Grinder` with a callback function
+1. `//= require fryr`
+1. Call `new Fryr` with a callback function
 1. PROFIT BYAH
 
 ## Initialization
@@ -22,7 +22,7 @@ The `hashChangeCallback` executes everytime the hash is changed. Commonly, this 
 function myFilteringCallbackFunction(params) {
   console.table(params);
 };
-var grind = new Grinder(myFilteringCallbackFunction);
+var fry = new Fryr(myFilteringCallbackFunction);
 ```
 
 ## Functions
@@ -37,7 +37,7 @@ var grind = new Grinder(myFilteringCallbackFunction);
 | `key_is_required` | boolean | false | if the key is not required, it will be removed from the hash |
 | `should_replace_value` | boolean | false | if false, value will be appended to the key |
 
-The Read/Write meat and potatoes of Grinder, this modifies the hash to your explicit purposes.
+The Read/Write meat and potatoes of Fryr, this modifies the hash to your explicit purposes.
 
 ### `.param`
 
@@ -51,7 +51,7 @@ Query a key in the hash directly, and don't even bother re-parsing it. In just a
 
 ```javascript
 // window.location.hash is '?color=blue'
-grind.param('color') // => 'blue'
+fry.param('color') // => 'blue'
 ```
 
 ### `.paramPresent`
@@ -66,18 +66,18 @@ Determine if a param exists or has a blank value.
 
 ```javascript
 // window.location.hash is '?color=blue'
-grind.paramPresent('color') // => true
+fry.paramPresent('color') // => true
 
 // window.location.hash is '?color='
-grind.paramPresent('color') // => false
+fry.paramPresent('color') // => false
 
 // window.location.hash is '?animal=bird'
-grind.paramPresent('color') // => false
+fry.paramPresent('color') // => false
 ```
 
 ### `.parse`
 
-Update Grinder's `Grinder.params` object with a fresh batch of updated key/values. This occurs on every `hashChange` event anyway, but sometimes you just want to be *that guy*.
+Update Fryr's `Fryr.params` object with a fresh batch of updated key/values. This occurs on every `hashChange` event anyway, but sometimes you just want to be *that guy*.
 
 ## Access
 

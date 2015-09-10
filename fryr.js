@@ -1,6 +1,6 @@
 'use strict';
 
-function Grinder(callback) {
+function Fryr(callback) {
   return this.init(callback);
 }
 
@@ -102,7 +102,7 @@ function Grinder(callback) {
   };
 
 
-  Grinder.prototype = {
+  Fryr.prototype = {
 
     // Very important object holder
     params: {},
@@ -309,7 +309,7 @@ function Grinder(callback) {
     * @param {string} key - param to target
     * @example
     *   window.location.hash = ?color=blue
-    *   grinder.param('color') // => 'blue'
+    *   fryr.param('color') // => 'blue'
     * @return {string} the value of the key
     */
     param: function(key) {
