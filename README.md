@@ -3,11 +3,11 @@
 Fryr is the fry cook you never knew you needed to turn that ugly frozen hash into pretty, delectable params. Not only does it make accessible params to use on the client-side, it also adds, removes, and updates them.
 
 ```javascript
-'http://psherman.com/#?tankhood=gill,deb,bloat'
-fry.params
+// http://psherman.com/#?tankhood=gill,deb,bloat
+fry.params;
 // => { 'tankhood' => 'gill,deb,bloat' }
 
-fry.update('tankhood', 'nemo')
+fry.update('tankhood', 'nemo');
 // => 'http://psherman.com/#?tankhood=gill,deb,bloat,nemo'
 ```
 
@@ -48,7 +48,56 @@ var fry = new Fryr(myFilteringCallbackFunction);
 | `key_is_required` | boolean | `false` | if the key is not required, it will be removed from the hash |
 | `should_replace_value` | boolean | `false` | if false, value will be appended to the key |
 
-The Read/Write meat and potatoes of Fryr, this modifies the hash to your explicit purposes.
+The meat and potatoes of Fryr, this modifies the hash to your explicit purposes.
+
+#### Examples
+
+**Add a key**
+
+```javascript
+fry.update('character', 'marlin');
+// => ...com/#?character=marlin
+```
+
+**Add a different key**
+
+```javascript
+// /#?character=marlin
+fry.update('home', 'reef');
+// => /#?character=marlin&home=reef
+```
+
+**Append value to key**
+
+```javascript
+// /#?character=marlin
+fry.update('character', 'nemo');
+// => /#?character=marlin,nemo
+```
+
+**Replace key's value**
+
+```javascript
+// /#?character=marlin
+fry.update('character', 'nemo', false, true);
+// => /#?character=nemo
+```
+
+**Remove key**
+
+```javascript
+// /#?character=marlin
+fry.update('character', '');
+// => /#
+```
+
+**Remove value but keep key**
+
+```javascript
+// /#?character=marlin
+fry.update('character', '', true);
+// => /#?character=
+```
 
 ### `.param`
 
@@ -56,12 +105,12 @@ The Read/Write meat and potatoes of Fryr, this modifies the hash to your explici
 |---|---|---|
 | `key` | string | the param to query |
 
-Query a key in the hash directly, and don't even bother re-parsing it. In just about every instance, accessing `.params.<key>` **is the better decision here**.
+Query a key in the hash directly, and don't even bother re-parsing it. In just about every instance, accessing `.params.<key>` **is the better decision here**. Returns string.
 
-**Example**
+#### Example
 
 ```javascript
-// http://psherman.com/#?can_speak_whale=dory
+// #?can_speak_whale=dory
 fry.param('can_speak_whale')
 // => 'dory'
 ```
@@ -74,19 +123,19 @@ fry.param('can_speak_whale')
 
 Determine if a param exists or has a blank value.
 
-**Example**
+#### Examples
 
 ```javascript
-// http://psherman.com/#?boat=touched
-fry.paramPresent('boat')
+// #?boat=touched
+fry.paramPresent('boat');
 // => true
 
-// http://psherman.com/#?boat=
-fry.paramPresent('boat')
+// #?boat=
+fry.paramPresent('boat');
 // => false
 
-// http://psherman.com/#?bomb=touched
-fry.paramPresent('boat')
+// #?bomb=touched
+fry.paramPresent('boat');
 // => false
 ```
 
@@ -96,13 +145,13 @@ Update Fryr's `Fryr.params` object with a fresh batch of updated key/values. Thi
 
 ### `.convert`
 
-Turn a JSON object into a string. Returns a string or false if the param is not an object or a string.
+Turn a JSON object into a string. Returns a string (without leading `#`) or false if the param is not an object or a string.
 
 | Arg | Type | Description |
 |---|---|---|
 | `obj` | object OR string | object to convert |
 
-**Example**
+#### Example
 
 ```javascript
 var obj = { 'support_group' : ['bruce', 'anchor', 'chum'], 'location' : 'submarine' };
@@ -121,7 +170,7 @@ Wipe out or selectively replace keys and values. Returns a string but also updat
 | `obj` | object OR string |  | query to replace |
 | `replace_all` | boolean | `false` | blast existing params away or replace only changed keys
 
-**Example**
+#### Examples
 
 ```javascript
 
@@ -129,7 +178,11 @@ Wipe out or selectively replace keys and values. Returns a string but also updat
 var obj = { 'directions' : 'through_the_trench' };
 fry.merge(obj);
 // => http://psherman.com/#?destination=sydney&directions=through_the_trench
+```
 
+**With `replace_all`**
+
+```javascript
 // http://psherman.com/#?destination=sydney
 var obj = { 'directions' : 'through_the_trench' };
 fry.merge(obj, true);
@@ -140,4 +193,4 @@ fry.merge(obj, true);
 
 ### `.params`
 
-Grab the key/value hash of the parsed version of `window.location.hash`.
+Grab the key/value hash of the parsed version of `window.location.hash`. Returns object.
