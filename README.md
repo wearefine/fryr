@@ -13,13 +13,13 @@ fry.update('tankhood', 'nemo');
 
 *Examples shown after initiliazation
 
-# Quick Start
+## Quick Start
 
 1. `//= require fryr`
 1. Call `new Fryr` with a callback function
 1. PROFIT BYAH
 
-# Initialization
+## Initialization
 
 | Arg | Type |
 |---|---|
@@ -36,9 +36,10 @@ function myFilteringCallbackFunction(params) {
 var fry = new Fryr(myFilteringCallbackFunction);
 ```
 
-# Functions
+## Functions
 
-## `.update`
+
+### `.update`
 
 | Arg | Type | Default | Description |
 |---|---|---|---|
@@ -49,7 +50,7 @@ var fry = new Fryr(myFilteringCallbackFunction);
 
 The meat and potatoes of Fryr, this modifies the hash to your explicit purposes.
 
-### Examples
+#### Examples
 
 **Add a key**
 
@@ -98,7 +99,7 @@ fry.update('character', '', true);
 // => /#?character=
 ```
 
-## `.param`
+### `.param`
 
 | Arg | Type | Description |
 |---|---|---|
@@ -106,7 +107,7 @@ fry.update('character', '', true);
 
 Query a key in the hash directly, and don't even bother re-parsing it. In just about every instance, accessing `.params.<key>` **is the better decision here**. Returns string.
 
-### Example
+#### Example
 
 ```javascript
 // #?can_speak_whale=dory
@@ -114,7 +115,7 @@ fry.param('can_speak_whale')
 // => 'dory'
 ```
 
-## `.paramPresent`
+### `.paramPresent`
 
 | Arg | Type | Description |
 |---|---|---|
@@ -122,7 +123,7 @@ fry.param('can_speak_whale')
 
 Determine if a param exists or has a blank value.
 
-### Examples
+#### Examples
 
 ```javascript
 // #?boat=touched
@@ -138,11 +139,11 @@ fry.paramPresent('boat');
 // => false
 ```
 
-## `.parse`
+### `.parse`
 
 Update Fryr's `Fryr.params` object with a fresh batch of updated key/values. This occurs on every `hashChange` event anyway, but sometimes you just want to be *that guy*. Returns object.
 
-## `.convert`
+### `.convert`
 
 Turn a JSON object into a string. Returns a string (without leading `#`) or false if the param is not an object or a string.
 
@@ -150,7 +151,7 @@ Turn a JSON object into a string. Returns a string (without leading `#`) or fals
 |---|---|---|
 | `obj` | object OR string | object to convert |
 
-### Example
+#### Example
 
 ```javascript
 var obj = { 'support_group' : ['bruce', 'anchor', 'chum'], 'location' : 'submarine' };
@@ -159,7 +160,7 @@ fry.convert(obj);
 // => '?support_group=bruce,anchor,chum&location=submarine
 ```
 
-## `.merge`
+### `.merge`
 
 Wipe out or selectively replace keys and values. Returns a string but also updates the hash.
 
@@ -169,7 +170,7 @@ Wipe out or selectively replace keys and values. Returns a string but also updat
 | `obj` | object OR string |  | query to replace |
 | `replace_all` | boolean | `false` | blast existing params away or replace only changed keys
 
-### Examples
+#### Examples
 
 ```javascript
 
@@ -188,8 +189,8 @@ fry.merge(obj, true);
 // => http://psherman.com/#?directions=through_the_trench
 ```
 
-# Access
+## Access
 
-## `.params`
+### `.params`
 
 Grab the key/value hash of the parsed version of `window.location.hash`. Returns object.
