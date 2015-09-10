@@ -7,7 +7,7 @@ Fryr is the fry cook you never knew you needed to turn that ugly, frozen hash in
 
 var fry = new Fryr(callback);
 fry.params;
-// => { 'tankhood' => 'gill,deb,bloat' }
+// => { 'tankhood' : 'gill,deb,bloat' }
 
 fry.update('tankhood', 'nemo');
 // => ...com/#?tankhood=gill,deb,bloat,nemo
