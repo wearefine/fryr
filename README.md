@@ -46,7 +46,6 @@ var fry = new Fryr(myFilteringCallbackFunction);
 | `key` | string |  | param key to query against |
 | `value` | mixed |  | value for param key |
 | `key_is_required` | boolean | `false` | if the key is not required, it will be removed from the hash |
-| `should_replace_value` | boolean | `false` | if false, value will be appended to the key |
 
 The meat and potatoes of Fryr, this modifies the hash to your explicit purposes.
 
@@ -65,14 +64,6 @@ fry.update('character', 'marlin');
 // /#?character=marlin
 fry.update('home', 'reef');
 // => /#?character=marlin&home=reef
-```
-
-**Append value to key**
-
-```javascript
-// /#?character=marlin
-fry.update('character', 'nemo');
-// => /#?character=marlin,nemo
 ```
 
 **Replace key's value**
@@ -97,6 +88,23 @@ fry.update('character', '');
 // /#?character=marlin
 fry.update('character', '', true);
 // => /#?character=
+```
+
+### `.append`
+
+| Arg | Type | Default | Description |
+|---|---|---|---|
+| `key` | string |  | param key to query against |
+| `value` | mixed |  | value for param key |
+
+Near identical to `.update`, this function is designed to add values as a list and not be a uniform replace-value.
+
+#### Example
+
+```javascript
+// /#?character=marlin
+fry.append('character', 'nemo');
+// => /#?character=marlin,nemo
 ```
 
 ### `.param`

@@ -19,7 +19,7 @@ describe('Fryr', function() {
 
     it('should append key when hash is not blank', function() {
       window.location.hash = '#?location=dentist';
-      fry.update('character', 'nemo', false, true);
+      fry.update('character', 'nemo', false);
 
       expect(window.location.hash).toEqual('#?location=dentist&character=nemo');
     });
@@ -32,46 +32,46 @@ describe('Fryr', function() {
     });
 
 
-    describe('key_is_required=false&should_replace_value=true', function() {
+    describe('key_is_required=false', function() {
 
       it('should remove key when value is blank', function() {
         window.location.hash = '#?character=nemo';
-        fry.update('character', '', false, true);
+        fry.update('character', '', false);
 
         expect(window.location.hash).toEqual('');
       });
 
       it('should remove value when value has two attributes and value is first', function() {
         window.location.hash = '#?character=nemo,marlin';
-        fry.update('character', 'nemo', false, true);
+        fry.update('character', 'nemo', false);
 
         expect(window.location.hash).toEqual('#?character=marlin');
       });
 
       it('should remove value when value has two attributes and value is last', function() {
         window.location.hash = '#?character=marlin,nemo';
-        fry.update('character', 'nemo', false, true);
+        fry.update('character', 'nemo', false);
 
         expect(window.location.hash).toEqual('#?character=marlin');
       });
 
       it('should remove value when value has multiple attributes and value is first', function() {
         window.location.hash = '#?character=nemo,marlin,dory';
-        fry.update('character', 'nemo', false, true);
+        fry.update('character', 'nemo', false);
 
         expect(window.location.hash).toEqual('#?character=marlin,dory');
       });
 
       it('should remove value when value has multiple attributes and value is in the middle', function() {
         window.location.hash = '#?character=marlin,nemo,dory';
-        fry.update('character', 'nemo', false, true);
+        fry.update('character', 'nemo', false);
 
         expect(window.location.hash).toEqual('#?character=marlin,dory');
       });
 
       it('should remove value when value has multiple attributes and value is at the end', function() {
         window.location.hash = '#?character=marlin,dory,nemo';
-        fry.update('character', 'nemo', false, true);
+        fry.update('character', 'nemo', false);
 
         expect(window.location.hash).toEqual('#?character=marlin,dory');
       });
@@ -80,42 +80,42 @@ describe('Fryr', function() {
 
         it('should remove key when value is blank', function() {
           window.location.hash = '#?location=eac&character=nemo';
-          fry.update('character', '', false, true);
+          fry.update('character', '', false);
 
           expect(window.location.hash).toEqual('#?location=eac');
         });
 
         it('should remove value when value has two attributes and value is first', function() {
           window.location.hash = '#?location=eac&character=nemo,marlin';
-          fry.update('character', 'nemo', false, true);
+          fry.update('character', 'nemo', false);
 
           expect(window.location.hash).toEqual('#?location=eac&character=marlin');
         });
 
         it('should remove value when value has two attributes and value is last', function() {
           window.location.hash = '#?location=eac&character=marlin,nemo';
-          fry.update('character', 'nemo', false, true);
+          fry.update('character', 'nemo', false);
 
           expect(window.location.hash).toEqual('#?location=eac&character=marlin');
         });
 
         it('should remove value when value has multiple attributes and value is first', function() {
           window.location.hash = '#?location=eac&character=nemo,marlin,dory';
-          fry.update('character', 'nemo', false, true);
+          fry.update('character', 'nemo', false);
 
           expect(window.location.hash).toEqual('#?location=eac&character=marlin,dory');
         });
 
         it('should remove value when value has multiple attributes and value is in the middle', function() {
           window.location.hash = '#?location=eac&character=marlin,nemo,dory';
-          fry.update('character', 'nemo', false, true);
+          fry.update('character', 'nemo', false);
 
           expect(window.location.hash).toEqual('#?location=eac&character=marlin,dory');
         });
 
         it('should remove value when value has multiple attributes and value is at the end', function() {
           window.location.hash = '#?location=eac&character=marlin,dory,nemo';
-          fry.update('character', 'nemo', false, true);
+          fry.update('character', 'nemo', false);
 
           expect(window.location.hash).toEqual('#?location=eac&character=marlin,dory');
         });
@@ -126,42 +126,42 @@ describe('Fryr', function() {
 
         it('should remove key when value is blank', function() {
           window.location.hash = '#?character=nemo&location=eac';
-          fry.update('character', '', false, true);
+          fry.update('character', '', false);
 
           expect(window.location.hash).toEqual('#?location=eac');
         });
 
         it('should remove value when value has two attributes and value is first', function() {
           window.location.hash = '#?character=nemo,marlin&location=eac';
-          fry.update('character', 'nemo', false, true);
+          fry.update('character', 'nemo', false);
 
           expect(window.location.hash).toEqual('#?character=marlin&location=eac');
         });
 
         it('should remove value when value has two attributes and value is last', function() {
           window.location.hash = '#?character=marlin,nemo&location=eac';
-          fry.update('character', 'nemo', false, true);
+          fry.update('character', 'nemo', false);
 
           expect(window.location.hash).toEqual('#?character=marlin&location=eac');
         });
 
         it('should remove value when value has multiple attributes and value is first', function() {
           window.location.hash = '#?character=nemo,marlin,dory&location=eac';
-          fry.update('character', 'nemo', false, true);
+          fry.update('character', 'nemo', false);
 
           expect(window.location.hash).toEqual('#?character=marlin,dory&location=eac');
         });
 
         it('should remove value when value has multiple attributes and value is in the middle', function() {
           window.location.hash = '#?character=marlin,nemo,dory&location=eac';
-          fry.update('character', 'nemo', false, true);
+          fry.update('character', 'nemo', false);
 
           expect(window.location.hash).toEqual('#?character=marlin,dory&location=eac');
         });
 
         it('should remove value when value has multiple attributes and value is at the end', function() {
           window.location.hash = '#?character=marlin,dory,nemo&location=eac';
-          fry.update('character', 'nemo', false, true);
+          fry.update('character', 'nemo', false);
 
           expect(window.location.hash).toEqual('#?character=marlin,dory&location=eac');
         });
@@ -170,28 +170,33 @@ describe('Fryr', function() {
 
     });
 
-    describe('key_is_required=true&should_replace_value=true', function() {
+    describe('key_is_required=true', function() {
 
       it('should keep key when value is blank', function() {
         window.location.hash = '#?character=nemo';
-        fry.update('character', '', true, true);
+        fry.update('character', '', true);
 
         expect(window.location.hash).toEqual('#?character=');
       });
 
     });
 
-    describe('key_is_required=false&should_replace_value=false', function() {
+
+  });
+
+  describe('.append()', function() {
+
+    describe('key_is_required=false', function() {
 
       it('should add key when key is nonexistent', function() {
-        fry.update('character', 'nemo', false, false);
+        fry.append('character', 'nemo');
 
         expect(window.location.hash).toEqual('#?character=nemo');
       });
 
       it('should add value when value is existent', function() {
         window.location.hash = '#?character=marlin';
-        fry.update('character', 'nemo', false, false);
+        fry.append('character', 'nemo');
 
         expect(window.location.hash).toEqual('#?character=marlin,nemo');
       });

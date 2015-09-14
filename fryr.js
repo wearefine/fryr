@@ -101,6 +101,75 @@ function Fryr(callback) {
     return (typeof variable === 'undefined') ? value : variable;
   };
 
+  /**
+  * @private
+  * @function update - remove key/value if present in hash; add key/value if not present in hash
+  * @param {string} key - param key to query against
+  * @param {mixed} value - value for param key
+  * @param {boolean} key_is_required - if the key is not required, it will be removed from the hash
+  * @param {boolean} should_replace_value - if false, value will be appended to the key
+  * @see .update and .append functions
+  */
+  var update = function(key, value, key_is_required, should_replace_value) {
+    var hash = window.location.hash;
+
+    // Ensure key exists in the hash
+    if(hash.indexOf(key) !== -1) {
+      var key_value = param(key);
+
+      var regex_for_value = new RegExp(value, 'g');
+
+      // If key_value contains the new value
+      if(regex_for_value.test(key_value)) {
+
+        // If key is required, swap it out
+        if(key_is_required) {
+          addValue(key, value, should_replace_value);
+
+        } else {
+
+          // If the value is blank, remove the original value from the key
+          if(value === '') {
+            removeValue(key, key_value);
+
+          // Otherwise remove the vanilla value
+          } else {
+            removeValue(key, value);
+
+          }
+
+          // If key's value is blank, remove it from hash
+          if(param(key) === '') {
+            removeKey(key);
+          }
+
+        }
+
+      // key_value does not contain the new value
+      } else {
+        addValue(key, value, should_replace_value);
+
+      }
+
+    // Add key if it doesn't exist
+    } else {
+
+      if(window.location.hash) {
+        window.location.hash += '&' + key + '=' + value;
+      } else {
+        // Use a question mark if first key
+        window.location.hash = '?' + key + '=' + value;
+      }
+
+    }
+
+    // Log it to the history
+    if (window.history && window.history.pushState) {
+      window.history.pushState(null, null, window.location.hash);
+    }
+
+  };
+
 
   Fryr.prototype = {
 
@@ -128,72 +197,25 @@ function Fryr(callback) {
     },
 
     /**
-    * @function update - remove key/value if present in hash; add key/value if not present in hash
+    * @function update - replace key/value if present in hash; add key/value if not present in hash
     * @param {string} key - param key to query against
     * @param {mixed} value - value for param key
     * @param {optional boolean} key_is_required {false} - if the key is not required, it will be removed from the hash
-    * @param {optional boolean} should_replace_value {false} - if false, value will be appended to the key
+    * @see .append function
     */
-    update: function(key, value, key_is_required, should_replace_value) {
-      var hash = window.location.hash;
+    update: function(key, value, key_is_required) {
       key_is_required = setDefault(key_is_required, false);
-      should_replace_value = setDefault(should_replace_value, false);
+      update(key, value, key_is_required, true);
+    },
 
-      // Ensure key exists in the hash
-      if(hash.indexOf(key) !== -1) {
-        var key_value = param(key);
-
-        var regex_for_value = new RegExp(value, 'g');
-
-        // If key_value contains the new value
-        if(regex_for_value.test(key_value)) {
-
-          // If key is required, swap it out
-          if(key_is_required) {
-            addValue(key, value, should_replace_value);
-
-          } else {
-
-            // If the value is blank, remove the original value from the key
-            if(value === '') {
-              removeValue(key, key_value);
-
-            // Otherwise remove the vanilla value
-            } else {
-              removeValue(key, value);
-
-            }
-
-            // If key's value is blank, remove it from hash
-            if(param(key) === '') {
-              removeKey(key);
-            }
-
-          }
-
-        // key_value does not contain the new value
-        } else {
-          addValue(key, value, should_replace_value);
-
-        }
-
-      // Add key if it doesn't exist
-      } else {
-
-        if(window.location.hash) {
-          window.location.hash += '&' + key + '=' + value;
-        } else {
-          // Use a question mark if first key
-          window.location.hash = '?' + key + '=' + value;
-        }
-
-      }
-
-      // Log it to the history
-      if (window.history && window.history.pushState) {
-        window.history.pushState(null, null, window.location.hash);
-      }
-
+    /**
+    * @function append - add value to key's value in a comma-delineated list if it's not present in hash
+    * @param {string} key - param key to query against
+    * @param {mixed} value - value for param key
+    * @see .update function
+    */
+    append: function(key, value) {
+      update(key, value, false, false);
     },
 
     /**
