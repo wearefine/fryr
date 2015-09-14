@@ -163,11 +163,6 @@ function Fryr(callback) {
 
     }
 
-    // Log it to the history
-    if (window.history && window.history.pushState) {
-      window.history.pushState(null, null, window.location.hash);
-    }
-
   };
 
 
