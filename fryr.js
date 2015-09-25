@@ -1,17 +1,22 @@
 'use strict';
 
+/**
+ * The Fryr global initialization
+ * @class
+ */
 function Fryr(callback) {
+  /** @lends Fryr.prototype */
   return this.init(callback);
 }
 
 (function () {
 
   /**
-  * @private
-  * @function removeValue - delete value based on key
-  * @param {string} key - param to target
-  * @param {mixed} value - value to delete from param
-  */
+   * @private
+   * @description Delete value based on key
+   * @param {String} key - Param to target
+   * @param {String|Number} value - Value to delete from param
+   */
   var removeValue = function(key, value) {
     var hash = window.location.hash;
     // check for key, anything between key and value, the value itself, and optionally the trailing comma
@@ -31,12 +36,12 @@ function Fryr(callback) {
   };
 
   /**
-  * @private
-  * @function addValue - add value based on key
-  * @param {string} key - param to target
-  * @param {mixed} value - value to add to param
-  * @param {optional boolean} should_replace_value - if false, value will be appended to the param
-  */
+   * @private
+   * @description Add value based on key
+   * @param {String} key - Param to target
+   * @param {String|Number} value - Value to add to param
+   * @param {Boolean} should_replace_value - if false, value will be appended to the param
+   */
   var addValue = function(key, value, should_replace_value) {
     var hash = window.location.hash;
 
@@ -61,10 +66,10 @@ function Fryr(callback) {
   };
 
   /**
-  * @private
-  * @function removeKey - remove key from hash. Key's value must be removed prior to executing this function
-  * @param {string} key - key to search and destroy
-  */
+   * @private
+   * @description Remove key from hash. Key's value must be removed prior to executing this function
+   * @param {String} key - Key to search and destroy
+   */
   var removeKey = function(key) {
     var hash = window.location.hash;
     var key_search = new RegExp('[?&]' + key + '=', 'g');
@@ -77,9 +82,9 @@ function Fryr(callback) {
   }
 
   /**
-  * @private
-  * @see documentation in the public `param` function
-  */
+   * @private
+   * @see {@link Fryr#param documentation in the public `param` function}
+   */
   var param = function(key) {
     if(!window.location.hash) {
       return '';
@@ -92,24 +97,26 @@ function Fryr(callback) {
   };
 
   /**
-  * @private
-  * @function setDefault - Apply value to variable if it has none
-  * @param {var} variable - variable to set default to
-  * @param {anything} value - default value to attribute to variable
-  */
+   * @private
+   * @description Apply value to variable if it has none
+   * @param {*} variable Variable to set default to
+   * @param {*} value - Default value to attribute to variable
+   * @return {*} Existing value or passed value argument
+   */
   var setDefault = function(variable, value){
     return (typeof variable === 'undefined') ? value : variable;
   };
 
   /**
-  * @private
-  * @function update - remove key/value if present in hash; add key/value if not present in hash
-  * @param {string} key - param key to query against
-  * @param {mixed} value - value for param key
-  * @param {boolean} key_is_required - if the key is not required, it will be removed from the hash
-  * @param {boolean} should_replace_value - if false, value will be appended to the key
-  * @see .update and .append functions
-  */
+   * @private
+   * @description Remove key/value if present in hash; add key/value if not present in hash
+   * @param {String} key - Param key to query against
+   * @param {String|Number} value - Value for param key
+   * @param {Boolean} key_is_required - If the key is not required, it will be removed from the hash
+   * @param {Boolean} should_replace_value - If false, value will be appended to the key
+   * @see {@link Fryr#update}
+   * @see {@link Fryr#append}
+   */
   var update = function(key, value, key_is_required, should_replace_value) {
     var hash = window.location.hash;
 
@@ -168,13 +175,17 @@ function Fryr(callback) {
 
   Fryr.prototype = {
 
-    // Very important object holder
+    /**
+     * @description Very important object holder
+     * @type {Object}
+     */
     params: {},
 
     /**
-    * @function init - call once to initialize filtering
-    * @param {func} hashChangeCallback - called on every hashchange (first argument is the updated params)
-    */
+     * @description Call once to initialize filtering
+     * @param {Function} hashChangeCallback - Called on every hashchange (first argument is the updated params)
+     * @return {Object} Fryr
+     */
     init: function(hashChangeCallback) {
       var _this = this;
 
@@ -188,35 +199,34 @@ function Fryr(callback) {
       privateHashChange();
 
       return this;
-
     },
 
     /**
-    * @function update - replace key/value if present in hash; add key/value if not present in hash
-    * @param {string} key - param key to query against
-    * @param {mixed} value - value for param key
-    * @param {optional boolean} key_is_required {false} - if the key is not required, it will be removed from the hash
-    * @see .append function
-    */
+     * @description Replace key/value if present in hash; add key/value if not present in hash
+     * @param {String} key - Param key to query against
+     * @param {String|Number} value - Value for param key
+     * @param {Boolean} [key_is_required=false] - if the key is not required, it will be removed from the hash
+     * @see {@link Fryr#append}
+     */
     update: function(key, value, key_is_required) {
       key_is_required = setDefault(key_is_required, false);
       update(key, value, key_is_required, true);
     },
 
     /**
-    * @function append - add value to key's value in a comma-delineated list if it's not present in hash
-    * @param {string} key - param key to query against
-    * @param {mixed} value - value for param key
-    * @see .update function
-    */
+     * @description Add value to key's value in a comma-delineated list if it's not present in hash
+     * @param {String} key - Param key to query against
+     * @param {String|Number} value - Value for param key
+     * @see {@link Fryr#update}
+     */
     append: function(key, value) {
       update(key, value, false, false);
     },
 
     /**
-    * @function parse - evaluate the hash
-    * @return key/value hash of the hash broken down by params
-    */
+     * @description Evaluate the hash
+     * @return {Object} Key/value hash of the hash broken down by params
+     */
     parse: function() {
       var hash = window.location.hash;
       var params;
@@ -242,10 +252,10 @@ function Fryr(callback) {
     },
 
     /**
-    * @function convert - change a JSON object into a string for the hash
-    * @param {object | string} obj - object to convert
-    * @return {string | boolean} to use in window.location.hash. Returns false if param is not object or string
-    */
+     * @description Change a JSON object into a string for the hash
+     * @param {Object|String} obj - object to convert
+     * @return {String|Boolean} For use in window.location.hash. Returns false if param is not object or string
+     */
     convert: function(obj) {
       if( obj.constructor === String ) {
         obj = JSON.parse(obj);
@@ -282,11 +292,11 @@ function Fryr(callback) {
     },
 
     /**
-    * @function merge - wipe out or selectively replace keys in params
-    * @param {object | string} obj - query to replace
-    * @param {boolean} replace_all {false} - whether or not to blast existing params away or replace only changed keys
-    * @return {string} but also updates hash
-    */
+     * @description Wipe out or selectively replace keys in params
+     * @param {Object|String} obj - Query to replace
+     * @param {Boolean} [replace_all=false] - Whether or not to blast existing params away or replace only changed keys
+     * @return {String} The new hash, but it also updates window.location.hash
+     */
     merge: function(obj, replace_all) {
       replace_all = setDefault(replace_all, false);
       var new_hash;
@@ -322,22 +332,22 @@ function Fryr(callback) {
     },
 
     /**
-    * @function param - retrieve a key's value
-    * @param {string} key - param to target
-    * @example
-    *   window.location.hash = ?color=blue
-    *   fryr.param('color') // => 'blue'
-    * @return {string} the value of the key
-    */
+     * @description Retrieve a key's value
+     * @param {String} key - Param to target
+     * @example
+     * window.location.hash = '?color=blue'
+     * fryr.param('color') // => 'blue'
+     * @return {String} The value of the key
+     */
     param: function(key) {
       return param(key);
     },
 
     /**
-    * @function paramPresent - determine if param is blank or undefined
-    * @param {string} key - param to target
-    * @return boolean
-    */
+     * @description Determine if param is blank or undefined
+     * @param {String} key - Param to target
+     * @return {Boolean}
+     */
     paramPresent: function(key) {
       var value = this.params[key];
       return (typeof value !== 'undefined' && value !== '');
