@@ -1,4 +1,4 @@
-/* Version 1.0 */
+/* Version 1.0.1 */
 
 'use strict';
 
@@ -14,8 +14,8 @@ function Fryr(callback) {
 (function () {
 
   /**
+   * Delete value based on key
    * @private
-   * @description Delete value based on key
    * @param {String} key - Param to target
    * @param {String|Number} value - Value to delete from param
    */
@@ -38,8 +38,8 @@ function Fryr(callback) {
   };
 
   /**
+   * Add value based on key
    * @private
-   * @description Add value based on key
    * @param {String} key - Param to target
    * @param {String|Number} value - Value to add to param
    * @param {Boolean} should_replace_value - if false, value will be appended to the param
@@ -68,8 +68,8 @@ function Fryr(callback) {
   };
 
   /**
+   * Remove key from hash. Key's value must be removed prior to executing this function
    * @private
-   * @description Remove key from hash. Key's value must be removed prior to executing this function
    * @param {String} key - Key to search and destroy
    */
   var removeKey = function(key) {
@@ -81,7 +81,7 @@ function Fryr(callback) {
     hash = hash.replace('#&', '#?');
 
     window.location.hash = hash;
-  }
+  };
 
   /**
    * @private
@@ -99,8 +99,8 @@ function Fryr(callback) {
   };
 
   /**
+   * Apply value to variable if it has none
    * @private
-   * @description Apply value to variable if it has none
    * @param {*} variable Variable to set default to
    * @param {*} value - Default value to attribute to variable
    * @return {*} Existing value or passed value argument
@@ -110,8 +110,8 @@ function Fryr(callback) {
   };
 
   /**
+   * Remove key/value if present in hash; add key/value if not present in hash
    * @private
-   * @description Remove key/value if present in hash; add key/value if not present in hash
    * @param {String} key - Param key to query against
    * @param {String|Number} value - Value for param key
    * @param {Boolean} key_is_required - If the key is not required, it will be removed from the hash
@@ -178,13 +178,13 @@ function Fryr(callback) {
   Fryr.prototype = {
 
     /**
-     * @description Very important object holder
+     * Very important object holder
      * @type {Object}
      */
     params: {},
 
     /**
-     * @description Call once to initialize filtering
+     * Call once to initialize filtering
      * @param {Function} hashChangeCallback - Called on every hashchange (first argument is the updated params)
      * @return {Object} Fryr
      */
@@ -204,7 +204,7 @@ function Fryr(callback) {
     },
 
     /**
-     * @description Replace key/value if present in hash; add key/value if not present in hash
+     * Replace key/value if present in hash; add key/value if not present in hash
      * @param {String} key - Param key to query against
      * @param {String|Number} value - Value for param key
      * @param {Boolean} [key_is_required=false] - if the key is not required, it will be removed from the hash
@@ -216,7 +216,7 @@ function Fryr(callback) {
     },
 
     /**
-     * @description Add value to key's value in a comma-delineated list if it's not present in hash
+     * Add value to key's value in a comma-delineated list if it's not present in hash
      * @param {String} key - Param key to query against
      * @param {String|Number} value - Value for param key
      * @see {@link Fryr#update}
@@ -226,7 +226,7 @@ function Fryr(callback) {
     },
 
     /**
-     * @description Evaluate the hash
+     * Evaluate the hash
      * @return {Object} Key/value hash of the hash broken down by params
      */
     parse: function() {
@@ -254,7 +254,7 @@ function Fryr(callback) {
     },
 
     /**
-     * @description Change a JSON object into a string for the hash
+     * Change a JSON object into a string for the hash
      * @param {Object|String} obj - object to convert
      * @return {String|Boolean} For use in window.location.hash. Returns false if param is not object or string
      */
@@ -294,25 +294,21 @@ function Fryr(callback) {
     },
 
     /**
-     * @description Wipe out or selectively replace keys in params
+     * Wipe out or selectively replace keys in params
      * @param {Object|String} obj - Query to replace
      * @param {Boolean} [replace_all=false] - Whether or not to blast existing params away or replace only changed keys
      * @return {String} The new hash, but it also updates window.location.hash
      */
     merge: function(obj, replace_all) {
       replace_all = setDefault(replace_all, false);
-      var new_hash;
 
       // If it's a string, convert to an object
       if( obj.constructor === String ) {
         obj = JSON.parse(obj);
       }
 
-      if( replace_all ) {
-        // Unilaterally make a string based on the params to use
-        new_hash = this.convert(obj);
-
-      } else {
+      // Override or add key values from existing params and put them into the object
+      if( !replace_all ) {
         var new_params = this.parse();
         var keys = Object.keys(new_params);
 
@@ -320,21 +316,19 @@ function Fryr(callback) {
           var key = keys[i];
           var value = new_params[key[i]];
 
-          if(obj.hasOwnProperty(key)) {
-            new_params[key] = obj[key];
-          }
+          obj[key] = value;
         }
-
-        new_hash = this.convert(new_params);
       }
 
+      // Change hash to string; if replace_all is false, original value is used
+      var new_hash = this.convert(obj);
       window.location.hash = '#' + new_hash;
 
       return new_hash;
     },
 
     /**
-     * @description Retrieve a key's value
+     * Retrieve a key's value
      * @param {String} key - Param to target
      * @example
      * window.location.hash = '?color=blue'
@@ -346,7 +340,7 @@ function Fryr(callback) {
     },
 
     /**
-     * @description Determine if param is blank or undefined
+     * Determine if param is blank or undefined
      * @param {String} key - Param to target
      * @return {Boolean}
      */
