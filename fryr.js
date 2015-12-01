@@ -275,7 +275,7 @@ function Fryr(callback) {
       // Loop through all keys in the obj
       for(var i = 0; i < keys.length; i++) {
         var key = keys[i];
-        var value = obj[keys[i]];
+        var value = obj[ key ];
 
         if( value.constructor === Array ) {
           value = value.join(',');
@@ -307,16 +307,19 @@ function Fryr(callback) {
         obj = JSON.parse(obj);
       }
 
-      // Override or add key values from existing params and put them into the object
+      // Add key values from existing params and put them into the object
       if( !replace_all ) {
         var new_params = this.parse();
         var keys = Object.keys(new_params);
 
         for(var i = 0; i < keys.length; i++) {
           var key = keys[i];
-          var value = new_params[key[i]];
+          var value = new_params[ key ];
 
-          obj[key] = value;
+          // Only add the key/value IF it doesn't exist already on the object
+          if( !obj.hasOwnProperty(key) ) {
+            obj[key] = value;
+          }
         }
       }
 
