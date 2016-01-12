@@ -1,6 +1,6 @@
 # Fryr
 
-Fryr is the fry cook you never knew you needed to turn that ugly, frozen hash into pretty, delectable params. Not only does it make params accessible for use on the client-side, it also adds, removes, and updates them.
+Fryr is the fry cook you never knew you needed to turn that ugly, frozen hash into pretty, delectably digestable params. Not only does it make params accessible for use on the client-side, it also adds, removes, and updates them.
 
 ```javascript
 // ...com/#?tankhood=gill,deb,bloat
@@ -21,9 +21,11 @@ fry.update('tankhood', 'nemo');
 
 ## Initialization
 
-| Arg | Type |
-|---|---|
-| `hashChangeCallback` | function |
+| Arg | Type | Default | Description |
+|---|---|---|---|
+| `hashChangeCallback` | function | | Called on every hashchange (first argument is the updated params) |
+| `defaults` | object | `{}` | Key/value pairs for values that should be added on init. Pass `{}` to skip to next argument |
+| `call_on_init` | boolean | `true` | Execute callback on initialization. Always true if defaults is supplied |
 
 The `hashChangeCallback` executes everytime the hash is changed. Commonly, this function updates the view and regenerates filtered items, uncommonly, it is used to print frustrated messages to the console, and very rarely it is used to sort the recyclables. It accepts one argument - the new params (as an object) that have been parsed.
 
