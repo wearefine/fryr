@@ -180,7 +180,8 @@
 
   /**
    * Call once to initialize filtering
-   * @param {Function} hashChangeCallback - Called on every hashchange (first argument is the updated params)
+   * @param {Function} hashChangeCallback - Called on every hashchange
+   *   @param {Object} Updated params
    * @param {Object} [defaults={}] - Key/value pairs for values that should be added on init. Pass {} to skip defaults
    * @param {Boolean} [call_on_init=true] - Execute callback on initialization. Always true if defaults is supplied
    * @return {Fryr}
