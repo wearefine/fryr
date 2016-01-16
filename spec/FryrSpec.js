@@ -1,6 +1,6 @@
 describe('Fryr', function() {
   var fry;
-  var callbackFunction = function(params) {
+  function callbackFunction(params) {
     return params;
   }
 
@@ -307,7 +307,7 @@ describe('Fryr', function() {
       var obj = { 'character' : 'dory' };
       var str = fry.merge(obj);
 
-      expect(str).toEqual('?location=dentist&character=dory');
+      expect(str).toEqual('?character=dory&location=dentist');
     });
 
   });
