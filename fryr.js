@@ -210,7 +210,7 @@
     window.addEventListener('hashchange', privateHashChange);
 
     // Apply defaults (if present) to hash, which will file window.onhashchange
-    if( Object.keys(defaults).length ) {
+    if( Object.keys(defaults).length && window.location.hash === '' ) {
       this.merge(defaults, true);
 
     // Execute the callback on load
