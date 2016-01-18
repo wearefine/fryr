@@ -1,0 +1,39 @@
+{
+  "name": "fryr",
+  "version": "1.1.0",
+  "description": "Command window.location.hash like a cook in a kitchen",
+  "main": "fryr.js",
+  "directories": {
+    "test": "test"
+  },
+  "devDependencies": {
+    "karma": "~0.13",
+    "karma-jasmine": "^0.3.6",
+    "karma-phantomjs-launcher": "^0.2.0",
+    "karma-chrome-launcher": "^0.2.2"
+  },
+  "scripts": {
+    "test": "karma start ./test/karma.conf.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wearefine/fryr.git"
+  },
+  "keywords": [
+    "hash",
+    "query",
+    "params",
+    "parameters",
+    "queries"
+  ],
+  "author": "Tim Shedor <tim@wearefine.com>",
+  "contributors": [
+    "FINE Design Group, Inc. Dev Department",
+    "Kyle Shevlin <kyle@wearefine.com>"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/wearefine/fryr/issues"
+  },
+  "homepage": "https://github.com/wearefine/fryr"
+}
