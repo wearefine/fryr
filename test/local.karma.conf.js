@@ -13,7 +13,6 @@ module.exports = function (config) {
       '../fryr.js',
 
       {
-        pattern: 'support/*.html',
         watched: true,
         served: true,
         included: false

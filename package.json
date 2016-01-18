@@ -7,7 +7,10 @@
     "test": "test"
   },
   "devDependencies": {
-    "karma": "~0.13"
+    "karma": "~0.13",
+    "karma-jasmine": "^0.3.6",
+    "karma-phantomjs-launcher": "^0.2.0",
+    "karma-chrome-launcher": "^0.2.2"
   },
   "scripts": {
     "test": "karma start ./test/karma.conf.js"

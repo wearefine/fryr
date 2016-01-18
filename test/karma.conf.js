@@ -11,10 +11,7 @@ module.exports = function (config) {
     files: [
       'spec/*.js',
       '../fryr.js',
-
       {
-        pattern: 'support/*.html',
-        watched: true,
         served: true,
         included: true
       }
