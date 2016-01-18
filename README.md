@@ -1,6 +1,6 @@
 # Fryr
 
-[![Build Status](https://travis-ci.org/wearefine/fryr.svg?branch=master)](https://travis-ci.org/wearefine/fryr)
+[![Build Status](https://travis-ci.org/wearefine/fryr.svg?branch=master)](https://travis-ci.org/wearefine/fryr) [![Code Climate](https://codeclimate.com/github/wearefine/fryr/badges/gpa.svg)](https://codeclimate.com/github/wearefine/fryr)
 
 Fryr is the fry cook you never knew you needed to turn that ugly, frozen hash into pretty, delectably digestable params. Not only does it make params accessible for use on the client-side, it also adds, removes, and updates them.
 
