@@ -12,6 +12,7 @@ module.exports = function (config) {
       'spec/*.js',
       '../fryr.js',
       {
+        pattern: '../*.js',
         served: true,
         included: true
       }
