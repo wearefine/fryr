@@ -206,3 +206,14 @@ fry.merge(obj, true);
 ### `.params`
 
 Grab the key/value hash of the parsed version of `window.location.hash`. Returns object.
+
+## Testing
+
+Install all dependencies:
+
+```bash
+npm install --save-dev
+```
+
+* `npm test` provides a quick, one-run test as defined in [test/karma.conf.js](test/karma.conf.js)
+* `npm run test:dev` opens a Karma instance that watches for file changes, as defined in [test/karma.conf.js](test/local.karma.conf.js)
