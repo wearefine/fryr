@@ -181,8 +181,6 @@
           } else {
             if(key_value !== value) {
               removeValue(key, value);
-            } else {
-              console.log('suppp')
             }
 
           }
