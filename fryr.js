@@ -203,11 +203,11 @@
      * @fires hashChangeCallback
      */
     function privateHashChange() {
-      var params = _this.parse();
-      hashChangeCallback(params);
+      var params = this.parse();
+      hashChangeCallback.call(this, params);
     }
 
-    window.addEventListener('hashchange', privateHashChange);
+    window.addEventListener('hashchange', privateHashChange.bind(this));
 
     // Apply defaults (if present) to hash, which will file window.onhashchange
     if( Object.keys(defaults).length && window.location.hash === '' ) {
@@ -215,7 +215,7 @@
 
     // Execute the callback on load
     } else if(call_on_init) {
-      privateHashChange();
+      privateHashChange.call(this);
 
     }
 
@@ -232,7 +232,7 @@
   Fryr.prototype.update = function(key, value, key_is_required) {
     key_is_required = setDefault(key_is_required, false);
     update(key, value, key_is_required, true);
-  }
+  };
 
   /**
    * Add value to key's value in a comma-delineated list if it's not present in hash
