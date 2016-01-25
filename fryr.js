@@ -1,4 +1,4 @@
-/* Version 1.1.0 */
+/* Version 1.2.0 */
 
 (function (window, factory) {
   'use strict';
@@ -15,11 +15,41 @@
   'use strict';
 
   /**
+   * Remove all traces of a hash if it's blank
+   * @private
+   * @param {String} hash - The existing hash
+   * @see {@link http://stackoverflow.com/a/5298684}
+   * @fires history.pushState OR window.onhashchange
+   */
+  function clearBlankHash(hash) {
+    if(hash === '#') {
+      // Modern browsers
+      if ('pushState' in history) {
+        history.pushState('', document.title, window.location.pathname + window.location.search);
+
+      } else {
+        // Prevent scrolling by storing the page's current scroll offset
+        var scrollV = document.body.scrollTop;
+        var scrollH = document.body.scrollLeft;
+
+        window.location.hash = '';
+
+        // Restore the scroll offset
+        document.body.scrollTop = scrollV;
+        document.body.scrollLeft = scrollH;
+      }
+    } else {
+      // If the hash isn't blank, fire onhashchange
+      window.location.hash = hash;
+
+    }
+  }
+
+  /**
    * Delete value based on key
    * @private
    * @param {String} key - Param to target
    * @param {String|Number} value - Value to delete from param
-   * @fires window.onhashchange
    */
   function removeValue(key, value) {
     var hash = window.location.hash;
@@ -36,7 +66,7 @@
     hash = hash.replace(/,$/, '');
     hash = hash.replace(/=\,/g, '=');
 
-    window.location.hash = hash;
+    clearBlankHash(hash);
   }
 
   /**
@@ -74,7 +104,6 @@
    * Remove key from hash. Key's value must be removed prior to executing this function
    * @private
    * @param {String} key - Key to search and destroy
-   * @fires window.onhashchange
    */
   function removeKey(key) {
     var hash = window.location.hash;
@@ -84,7 +113,7 @@
     // if initial key removed, replace ampersand with question
     hash = hash.replace('#&', '#?');
 
-    window.location.hash = hash;
+    clearBlankHash(hash);
   }
 
   /**
@@ -95,6 +124,7 @@
     if(!window.location.hash) {
       return '';
     }
+
     var hash = window.location.hash;
     var search = new RegExp('#.*[?&]' + key + '=([^&]+)(&|$)');
     var key_value = hash.match(search);
@@ -148,7 +178,9 @@
 
           // Otherwise remove the vanilla value
           } else {
-            removeValue(key, value);
+            if(key_value !== value) {
+              removeValue(key, value);
+            }
 
           }
 

@@ -31,13 +31,21 @@ describe('Fryr', function() {
       expect(window.location.hash).toEqual('#?location=eac,dentist&character=nemo');
     });
 
+    it('should not replace values when update value is the same', function() {
+      window.location.hash = '#?location=dentist';
+      fry.update('location', 'dentist');
+
+      expect(window.location.hash).toEqual('#?location=dentist');
+    });
+
 
     describe('key_is_required=false', function() {
 
       it('should remove key when value is blank', function() {
         window.location.hash = '#?character=nemo';
-        fry.update('character', '', false);
+        fry.update('character', '');
 
+        expect(window.location.hash).not.toEqual('#');
         expect(window.location.hash).toEqual('');
       });
 
@@ -343,6 +351,5 @@ describe('Fryr', function() {
       expect(window.location.hash).toEqual('#?just_keep=swimming');
     });
   });
-
 
 });
