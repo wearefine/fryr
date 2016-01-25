@@ -13,7 +13,7 @@
     "karma-chrome-launcher": "^0.2.2"
   },
   "scripts": {
-    "test": "karma start ./test/karma.conf.js",
+    "test": "env PHANTOMJS_BIN=/usr/local/bin/phantomjs karma start ./test/karma.conf.js",
     "test:dev": "karma start ./test/local.karma.conf.js",
     "test:dev:phantom": "karma start ./test/local.phantom.karma.conf.js"
   },
