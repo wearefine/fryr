@@ -21,7 +21,7 @@
    * @see {@link http://stackoverflow.com/a/5298684}
    * @fires history.pushState OR window.onhashchange
    */
-  function clearBlankHash(hash) {
+  function removeHashIfBlank(hash) {
     if(hash === '#') {
       // Modern browsers
       if ('pushState' in history) {
@@ -38,6 +38,7 @@
         document.body.scrollTop = scrollV;
         document.body.scrollLeft = scrollH;
       }
+
     } else {
       // If the hash isn't blank, fire onhashchange
       window.location.hash = hash;
@@ -66,7 +67,7 @@
     hash = hash.replace(/,$/, '');
     hash = hash.replace(/=\,/g, '=');
 
-    clearBlankHash(hash);
+    removeHashIfBlank(hash);
   }
 
   /**
@@ -113,7 +114,7 @@
     // if initial key removed, replace ampersand with question
     hash = hash.replace('#&', '#?');
 
-    clearBlankHash(hash);
+    removeHashIfBlank(hash);
   }
 
   /**
