@@ -3,9 +3,9 @@ module.exports = function (config) {
     basePath : '',
     autoWatch : true,
     frameworks: ['jasmine'],
-    browsers : ['PhantomJS'],
+    browsers: ['PhantomJS2'],
     plugins : [
-      'karma-phantomjs-launcher',
+      'karma-phantomjs2-launcher',
       'karma-jasmine',
     ],
     files: [
