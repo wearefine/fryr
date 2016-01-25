@@ -312,5 +312,37 @@ describe('Fryr', function() {
 
   });
 
+  describe('.destroy()', function() {
+    it('should remove the hashchange listener', function() {
+      var hash_fires = 0;
+
+      fry = new Fryr(function(params) {
+        hash_fires += 1;
+      });
+
+      // Ensure custom callback works
+      window.location.hash = '#?just_keep=swimming';
+      expect(hash_fires).toEqual(1);
+
+      fry.destroy();
+
+      // Ensure hash was removed
+      expect(window.location.hash).toEqual('');
+
+      // Ensure custom callback did not fire
+      window.location.hash = '#?just_keep=floating';
+      expect(hash_fires).toEqual(1);
+    });
+
+    it('should remove the hashchange listener but keep the hash string when retain_hash is true', function() {
+      window.location.hash = '#?just_keep=swimming';
+
+      fry.destroy(true);
+
+      // Ensure hash was maintained
+      expect(window.location.hash).toEqual('#?just_keep=swimming');
+    });
+  });
+
 
 });

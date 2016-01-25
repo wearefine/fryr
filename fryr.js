@@ -179,6 +179,16 @@
   }
 
   /**
+   * Callback with new params. Callback defined in initialization
+   * @private
+   * @fires hashChangeCallback
+   */
+  function privateHashChange() {
+    var params = this.parse();
+    this.callback.call(this, params);
+  }
+
+  /**
    * Call once to initialize filtering
    * @param {Function} hashChangeCallback - Called on every hashchange
    *   @param {Object} Updated params
@@ -187,25 +197,16 @@
    * @return {Fryr}
    */
   function Fryr(hashChangeCallback, defaults, call_on_init) {
-    var _this = this;
     defaults = setDefault(defaults, {});
     call_on_init = setDefault(call_on_init, true);
+
+    this.callback = hashChangeCallback;
 
     /**
      * Very important object holder
      * @type {Object}
      */
     this.params = {};
-
-    /**
-     * Callback with new params
-     * @private
-     * @fires hashChangeCallback
-     */
-    function privateHashChange() {
-      var params = this.parse();
-      hashChangeCallback.call(this, params);
-    }
 
     window.addEventListener('hashchange', privateHashChange.bind(this));
 
@@ -371,6 +372,20 @@
   Fryr.prototype.paramPresent = function(key) {
     var value = this.params[key];
     return (typeof value !== 'undefined' && value !== '');
+  };
+
+  /**
+   * Destroy current initialization, unbind hashchange listener, and reset the hash to an empty state
+   * @param {Boolean} [retain_hash=false] - Keep items in hash
+   */
+  Fryr.prototype.destroy = function(retain_hash){
+    retain_hash = setDefault(retain_hash, false);
+
+    window.removeEventListener('hashchange', privateHashChange);
+
+    if(!retain_hash) {
+      window.location.hash = '';
+    }
   };
 
   return Fryr;
