@@ -4,6 +4,10 @@ module.exports = function (config) {
     autoWatch : true,
     frameworks: ['jasmine'],
     browsers: ['PhantomJS2'],
+    phantomjsLauncher: {
+      // Have phantomjs exit if a ResourceError is encountered (useful if karma exits without killing phantom)
+      exitOnResourceError: true
+    },
     plugins : [
       'karma-phantomjs2-launcher',
       'karma-jasmine',
@@ -11,14 +15,17 @@ module.exports = function (config) {
     files: [
       'spec/*.js',
       '../fryr.js',
+
       {
         pattern: '../*.js',
+        watched: true,
         served: true,
-        included: true
+        included: false
       }
     ],
-    singleRun: true,
+
     reporters: ['progress'],
-    colors: true
+    colors: true,
+    singleRun: true
   });
 };
