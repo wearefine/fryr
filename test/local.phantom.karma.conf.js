@@ -26,6 +26,7 @@ module.exports = function (config) {
 
     reporters: ['progress'],
     colors: true,
+    autoWatch: true,
     singleRun: true
   });
 };

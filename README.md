@@ -201,6 +201,27 @@ fry.merge(obj, true);
 // => /#?directions=through_the_trench
 ```
 
+### `.destroy`
+
+Destroy current initialization, unbind `hashchange` listener, and reset the hash to an empty state.
+
+| Arg | Type | Default | Description |
+|---|---|---|---|
+| `retain_hash` | boolean | `false` | preserve hash state |
+
+#### Examples
+
+```javascript
+// /#?destination=sydney&directions=over_the_trench
+fry.destroy();
+// => /
+
+
+// /#?destination=sydney&directions=over_the_trench
+fry.destroy(true);
+// => /#?destination=sydney&directions=over_the_trench
+```
+
 ## Access
 
 ### `.params`
