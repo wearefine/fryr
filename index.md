@@ -111,6 +111,7 @@ Near identical to `.update`, this function is designed to add values as a list a
 
 ```javascript
 // /#?character=marlin
+
 fry.append('character', 'nemo');
 // => /#?character=marlin,nemo
 ```
@@ -127,6 +128,7 @@ Query a key in the hash directly, and don't even bother re-parsing it. In just a
 
 ```javascript
 // #?can_speak_whale=dory
+
 fry.param('can_speak_whale')
 // => 'dory'
 ```
@@ -218,12 +220,10 @@ Destroy current initialization, unbind `hashchange` listener, and reset the hash
 
 ```javascript
 // /#?destination=sydney&directions=over_the_trench
-
 fry.destroy();
 // => /
 
 // /#?destination=sydney&directions=over_the_trench
-
 fry.destroy(true);
 // => /#?destination=sydney&directions=over_the_trench
 ```
