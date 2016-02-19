@@ -11,7 +11,10 @@ pre {
   word-wrap: break-word;
   tab-size: 4;
   hyphens: none;
+}
 
+pre  {
+  margin: 0 0 $base-space;
 }
 
 :not(pre) > code,
@@ -21,7 +24,6 @@ pre {
 }
 
 .highlight {
-  margin-bottom: $base-space;
   border: 1px dashed $c-code-border;
   line-height: 1.2;
 }
