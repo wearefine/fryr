@@ -66,6 +66,7 @@ fry.update('character', 'marlin');
 
 ```javascript
 // /#?character=marlin
+
 fry.update('home', 'reef');
 // => /#?character=marlin&home=reef
 ```
@@ -74,6 +75,7 @@ fry.update('home', 'reef');
 
 ```javascript
 // /#?character=marlin
+
 fry.update('character', 'nemo', false, true);
 // => /#?character=nemo
 ```
@@ -82,6 +84,7 @@ fry.update('character', 'nemo', false, true);
 
 ```javascript
 // /#?character=marlin
+
 fry.update('character', '');
 // => /#
 ```
@@ -90,6 +93,7 @@ fry.update('character', '');
 
 ```javascript
 // /#?character=marlin
+
 fry.update('character', '', true);
 // => /#?character=
 ```
@@ -185,8 +189,8 @@ Wipe out or selectively replace keys and values. Returns a string but also updat
 #### Examples
 
 ```javascript
-
 // /#?destination=sydney&directions=over_the_trench
+
 var obj = { 'directions' : 'through_the_trench' };
 fry.merge(obj);
 // => /#?destination=sydney&directions=through_the_trench
@@ -196,6 +200,7 @@ fry.merge(obj);
 
 ```javascript
 // /#?destination=sydney
+
 var obj = { 'directions' : 'through_the_trench' };
 fry.merge(obj, true);
 // => /#?directions=through_the_trench
@@ -213,11 +218,12 @@ Destroy current initialization, unbind `hashchange` listener, and reset the hash
 
 ```javascript
 // /#?destination=sydney&directions=over_the_trench
+
 fry.destroy();
 // => /
 
-
 // /#?destination=sydney&directions=over_the_trench
+
 fry.destroy(true);
 // => /#?destination=sydney&directions=over_the_trench
 ```

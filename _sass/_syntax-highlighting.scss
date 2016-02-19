@@ -7,10 +7,10 @@
   .err   { color: $c-code-property; } // Error
   .k     { color: $c-code-keyword; font-weight: bold } // Keyword
   .o     { color: $c-code-variable; font-weight: bold } // Operator
-  .cm    { color: $c-code-comment; font-style: italic } // Comment.Multiline
+  .cm    { color: $c-code-comment; } // Comment.Multiline
   .cp    { color: $c-code-comment; font-weight: bold } // Comment.Preproc
-  .c1    { color: $c-code-comment; font-style: italic } // Comment.Single
-  .cs    { color: $c-code-comment; font-weight: bold; font-style: italic } // Comment.Special
+  .c1    { color: $c-code-comment; } // Comment.Single
+  .cs    { color: $c-code-comment; font-weight: bold; } // Comment.Special
   .gd    { color: $c-red; background-color: rgba($c-red, 0.1); } // Generic.Deleted
   .gd .x { color: $c-red; background-color: rgba($c-red, 0.3); } // Generic.Deleted.Specific
   .ge    { font-style: italic } // Generic.Emph
