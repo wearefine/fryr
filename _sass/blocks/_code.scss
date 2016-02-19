@@ -1,6 +1,6 @@
 code,
 pre {
-  color: $c-black;
+  color: $c-gray;
   text-shadow: 0 1px $c-white;
   font-family: $f-monospace;
   direction: ltr;
@@ -17,7 +17,7 @@ pre {
 :not(pre) > code,
 pre {
   background: $c-code-bg;
-  padding: 0 0.2em;
+  padding: 0.1em 0.2em;
 }
 
 .highlight {

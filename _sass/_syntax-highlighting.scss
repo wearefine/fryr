@@ -1,8 +1,9 @@
 // Syntax highlighting styles
 .highlight {
   background: $c-code-bg;
+  padding: 12px 14px;
 
-  .c     { color: $c-code-comment; font-style: italic } // Comment
+  .c     { color: $c-code-comment; } // Comment
   .err   { color: $c-code-property; } // Error
   .k     { color: $c-code-keyword; font-weight: bold } // Keyword
   .o     { color: $c-code-variable; font-weight: bold } // Operator
