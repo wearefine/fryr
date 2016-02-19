@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Fryr by wearefine</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Fryr</h1>
+      <h2 class="project-tagline">Command window.location.hash like a cook in a kitchen</h2>
+      <a href="https://github.com/wearefine/fryr" class="btn">View on GitHub</a>
+      <a href="https://github.com/wearefine/fryr/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/wearefine/fryr/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h1>
+<a id="fryr" class="anchor" href="#fryr" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Fryr</h1>
+
+<p><a href="https://travis-ci.org/wearefine/fryr"><img src="https://travis-ci.org/wearefine/fryr.svg?branch=master" alt="Build Status"></a> <a href="https://codeclimate.com/github/wearefine/fryr"><img src="https://codeclimate.com/github/wearefine/fryr/badges/gpa.svg" alt="Code Climate"></a></p>
+
+<p>Fryr is the fry cook you never knew you needed to turn that ugly, frozen hash into pretty, delectably digestable params. Not only does it make params accessible for use on the client-side, it also adds, removes, and updates them.</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-c">// ...com/#?tankhood=gill,deb,bloat</span>
+
+<span class="pl-k">var</span> fry <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">Fryr</span>(callback);
+<span class="pl-smi">fry</span>.<span class="pl-smi">params</span>;
+<span class="pl-c">// =&gt; { 'tankhood' : 'gill,deb,bloat' }</span>
+
+<span class="pl-smi">fry</span>.<span class="pl-en">update</span>(<span class="pl-s"><span class="pl-pds">'</span>tankhood<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>nemo<span class="pl-pds">'</span></span>);
+<span class="pl-c">// =&gt; ...com/#?tankhood=gill,deb,bloat,nemo</span></pre></div>
+
+<h2>
+<a id="quick-start" class="anchor" href="#quick-start" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Quick Start</h2>
+
+<ol>
+<li><code>//= require fryr</code></li>
+<li>Call <code>new Fryr</code> with a callback function</li>
+<li>PROFIT BYAH</li>
+</ol>
+
+<h2>
+<a id="initialization" class="anchor" href="#initialization" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Initialization</h2>
+
+<table>
+<thead>
+<tr>
+<th>Arg</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>hashChangeCallback</code></td>
+<td>function</td>
+<td></td>
+<td>Called on every hashchange (first argument is the updated params)</td>
+</tr>
+<tr>
+<td><code>defaults</code></td>
+<td>object</td>
+<td><code>{}</code></td>
+<td>Key/value pairs for values that should be added on init. Pass <code>{}</code> to skip to next argument</td>
+</tr>
+<tr>
+<td><code>call_on_init</code></td>
+<td>boolean</td>
+<td><code>true</code></td>
+<td>Execute callback on initialization. Always true if defaults is supplied</td>
+</tr>
+</tbody>
+</table>
+
+<p>The <code>hashChangeCallback</code> executes everytime the hash is changed. Commonly, this function updates the view and regenerates filtered items, uncommonly, it is used to print frustrated messages to the console, and very rarely it is used to sort the recyclables. It accepts one argument - the new params (as an object) that have been parsed.</p>
+
+<p><strong>Example</strong></p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">function</span> <span class="pl-en">myFilteringCallbackFunction</span>(<span class="pl-smi">params</span>) {
+  <span class="pl-en">console</span>.<span class="pl-en">table</span>(params);
+};
+<span class="pl-k">var</span> fry <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">Fryr</span>(myFilteringCallbackFunction);</pre></div>
+
+<h2>
+<a id="functions" class="anchor" href="#functions" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Functions</h2>
+
+<h3>
+<a id="update" class="anchor" href="#update" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><code>.update</code>
+</h3>
+
+<table>
+<thead>
+<tr>
+<th>Arg</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>key</code></td>
+<td>string</td>
+<td></td>
+<td>param key to query against</td>
+</tr>
+<tr>
+<td><code>value</code></td>
+<td>mixed</td>
+<td></td>
+<td>value for param key</td>
+</tr>
+<tr>
+<td><code>key_is_required</code></td>
+<td>boolean</td>
+<td><code>false</code></td>
+<td>if the key is not required, it will be removed from the hash</td>
+</tr>
+</tbody>
+</table>
+
+<p>The meat and potatoes of Fryr, this modifies the hash to your explicit purposes.</p>
+
+<h4>
+<a id="examples" class="anchor" href="#examples" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Examples</h4>
+
+<p><strong>Add a key</strong></p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-smi">fry</span>.<span class="pl-en">update</span>(<span class="pl-s"><span class="pl-pds">'</span>character<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>marlin<span class="pl-pds">'</span></span>);
+<span class="pl-c">// =&gt; ...com/#?character=marlin</span></pre></div>
+
+<p><strong>Add a different key</strong></p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-c">// /#?character=marlin</span>
+<span class="pl-smi">fry</span>.<span class="pl-en">update</span>(<span class="pl-s"><span class="pl-pds">'</span>home<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>reef<span class="pl-pds">'</span></span>);
+<span class="pl-c">// =&gt; /#?character=marlin&amp;home=reef</span></pre></div>
+
+<p><strong>Replace key's value</strong></p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-c">// /#?character=marlin</span>
+<span class="pl-smi">fry</span>.<span class="pl-en">update</span>(<span class="pl-s"><span class="pl-pds">'</span>character<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>nemo<span class="pl-pds">'</span></span>, <span class="pl-c1">false</span>, <span class="pl-c1">true</span>);
+<span class="pl-c">// =&gt; /#?character=nemo</span></pre></div>
+
+<p><strong>Remove key</strong></p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-c">// /#?character=marlin</span>
+<span class="pl-smi">fry</span>.<span class="pl-en">update</span>(<span class="pl-s"><span class="pl-pds">'</span>character<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span><span class="pl-pds">'</span></span>);
+<span class="pl-c">// =&gt; /#</span></pre></div>
+
+<p><strong>Remove value but keep key</strong></p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-c">// /#?character=marlin</span>
+<span class="pl-smi">fry</span>.<span class="pl-en">update</span>(<span class="pl-s"><span class="pl-pds">'</span>character<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span><span class="pl-pds">'</span></span>, <span class="pl-c1">true</span>);
+<span class="pl-c">// =&gt; /#?character=</span></pre></div>
+
+<h3>
+<a id="append" class="anchor" href="#append" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><code>.append</code>
+</h3>
+
+<table>
+<thead>
+<tr>
+<th>Arg</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>key</code></td>
+<td>string</td>
+<td></td>
+<td>param key to query against</td>
+</tr>
+<tr>
+<td><code>value</code></td>
+<td>mixed</td>
+<td></td>
+<td>value for param key</td>
+</tr>
+</tbody>
+</table>
+
+<p>Near identical to <code>.update</code>, this function is designed to add values as a list and not be a uniform replace-value.</p>
+
+<h4>
+<a id="example" class="anchor" href="#example" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Example</h4>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-c">// /#?character=marlin</span>
+<span class="pl-smi">fry</span>.<span class="pl-en">append</span>(<span class="pl-s"><span class="pl-pds">'</span>character<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>nemo<span class="pl-pds">'</span></span>);
+<span class="pl-c">// =&gt; /#?character=marlin,nemo</span></pre></div>
+
+<h3>
+<a id="param" class="anchor" href="#param" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><code>.param</code>
+</h3>
+
+<table>
+<thead>
+<tr>
+<th>Arg</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>key</code></td>
+<td>string</td>
+<td>the param to query</td>
+</tr>
+</tbody>
+</table>
+
+<p>Query a key in the hash directly, and don't even bother re-parsing it. In just about every instance, accessing <code>.params.&lt;key&gt;</code> <strong>is the better decision here</strong>. Returns string.</p>
+
+<h4>
+<a id="example-1" class="anchor" href="#example-1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Example</h4>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-c">// #?can_speak_whale=dory</span>
+<span class="pl-smi">fry</span>.<span class="pl-en">param</span>(<span class="pl-s"><span class="pl-pds">'</span>can_speak_whale<span class="pl-pds">'</span></span>)
+<span class="pl-c">// =&gt; 'dory'</span></pre></div>
+
+<h3>
+<a id="parampresent" class="anchor" href="#parampresent" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><code>.paramPresent</code>
+</h3>
+
+<table>
+<thead>
+<tr>
+<th>Arg</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>key</code></td>
+<td>string</td>
+<td>the param to query</td>
+</tr>
+</tbody>
+</table>
+
+<p>Determine if a param exists or has a blank value.</p>
+
+<h4>
+<a id="examples-1" class="anchor" href="#examples-1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Examples</h4>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-c">// #?boat=touched</span>
+<span class="pl-smi">fry</span>.<span class="pl-en">paramPresent</span>(<span class="pl-s"><span class="pl-pds">'</span>boat<span class="pl-pds">'</span></span>);
+<span class="pl-c">// =&gt; true</span>
+
+<span class="pl-c">// #?boat=</span>
+<span class="pl-smi">fry</span>.<span class="pl-en">paramPresent</span>(<span class="pl-s"><span class="pl-pds">'</span>boat<span class="pl-pds">'</span></span>);
+<span class="pl-c">// =&gt; false</span>
+
+<span class="pl-c">// #?bomb=touched</span>
+<span class="pl-smi">fry</span>.<span class="pl-en">paramPresent</span>(<span class="pl-s"><span class="pl-pds">'</span>boat<span class="pl-pds">'</span></span>);
+<span class="pl-c">// =&gt; false</span></pre></div>
+
+<h3>
+<a id="parse" class="anchor" href="#parse" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><code>.parse</code>
+</h3>
+
+<p>Update Fryr's <code>Fryr.params</code> object with a fresh batch of updated key/values. This occurs on every <code>hashChange</code> event anyway, but sometimes you just want to be <em>that guy</em>. Returns object.</p>
+
+<h3>
+<a id="convert" class="anchor" href="#convert" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><code>.convert</code>
+</h3>
+
+<p>Turn a JSON object into a string. Returns a string (without leading <code>#</code>) or false if the param is not an object or a string.</p>
+
+<table>
+<thead>
+<tr>
+<th>Arg</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>obj</code></td>
+<td>object OR string</td>
+<td>object to convert</td>
+</tr>
+</tbody>
+</table>
+
+<h4>
+<a id="example-2" class="anchor" href="#example-2" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Example</h4>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> obj <span class="pl-k">=</span> { <span class="pl-s"><span class="pl-pds">'</span>support_group<span class="pl-pds">'</span></span> <span class="pl-k">:</span> [<span class="pl-s"><span class="pl-pds">'</span>bruce<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>anchor<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>chum<span class="pl-pds">'</span></span>], <span class="pl-s"><span class="pl-pds">'</span>location<span class="pl-pds">'</span></span> <span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>submarine<span class="pl-pds">'</span></span> };
+
+<span class="pl-smi">fry</span>.<span class="pl-en">convert</span>(obj);
+<span class="pl-c">// =&gt; '?support_group=bruce,anchor,chum&amp;location=submarine'</span></pre></div>
+
+<h3>
+<a id="merge" class="anchor" href="#merge" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><code>.merge</code>
+</h3>
+
+<p>Wipe out or selectively replace keys and values. Returns a string but also updates the hash.</p>
+
+<table>
+<thead>
+<tr>
+<th>Arg</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>obj</code></td>
+<td>object OR string</td>
+<td></td>
+<td>query to replace</td>
+</tr>
+<tr>
+<td><code>replace_all</code></td>
+<td>boolean</td>
+<td><code>false</code></td>
+<td>blast existing params away or replace only changed keys</td>
+</tr>
+</tbody>
+</table>
+
+<h4>
+<a id="examples-2" class="anchor" href="#examples-2" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Examples</h4>
+
+<div class="highlight highlight-source-js"><pre>
+<span class="pl-c">// /#?destination=sydney&amp;directions=over_the_trench</span>
+<span class="pl-k">var</span> obj <span class="pl-k">=</span> { <span class="pl-s"><span class="pl-pds">'</span>directions<span class="pl-pds">'</span></span> <span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>through_the_trench<span class="pl-pds">'</span></span> };
+<span class="pl-smi">fry</span>.<span class="pl-en">merge</span>(obj);
+<span class="pl-c">// =&gt; /#?destination=sydney&amp;directions=through_the_trench</span></pre></div>
+
+<p><strong>With <code>replace_all</code></strong></p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-c">// /#?destination=sydney</span>
+<span class="pl-k">var</span> obj <span class="pl-k">=</span> { <span class="pl-s"><span class="pl-pds">'</span>directions<span class="pl-pds">'</span></span> <span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>through_the_trench<span class="pl-pds">'</span></span> };
+<span class="pl-smi">fry</span>.<span class="pl-en">merge</span>(obj, <span class="pl-c1">true</span>);
+<span class="pl-c">// =&gt; /#?directions=through_the_trench</span></pre></div>
+
+<h3>
+<a id="destroy" class="anchor" href="#destroy" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><code>.destroy</code>
+</h3>
+
+<p>Destroy current initialization, unbind <code>hashchange</code> listener, and reset the hash to an empty state.</p>
+
+<table>
+<thead>
+<tr>
+<th>Arg</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>retain_hash</code></td>
+<td>boolean</td>
+<td><code>false</code></td>
+<td>preserve hash state</td>
+</tr>
+</tbody>
+</table>
+
+<h4>
+<a id="examples-3" class="anchor" href="#examples-3" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Examples</h4>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-c">// /#?destination=sydney&amp;directions=over_the_trench</span>
+<span class="pl-smi">fry</span>.<span class="pl-en">destroy</span>();
+<span class="pl-c">// =&gt; /</span>
+
+
+<span class="pl-c">// /#?destination=sydney&amp;directions=over_the_trench</span>
+<span class="pl-smi">fry</span>.<span class="pl-en">destroy</span>(<span class="pl-c1">true</span>);
+<span class="pl-c">// =&gt; /#?destination=sydney&amp;directions=over_the_trench</span></pre></div>
+
+<h2>
+<a id="access" class="anchor" href="#access" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Access</h2>
+
+<h3>
+<a id="params" class="anchor" href="#params" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><code>.params</code>
+</h3>
+
+<p>Grab the key/value hash of the parsed version of <code>window.location.hash</code>. Returns object.</p>
+
+<h2>
+<a id="testing" class="anchor" href="#testing" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Testing</h2>
+
+<p>Install all dependencies:</p>
+
+<div class="highlight highlight-source-shell"><pre>npm install --save-dev</pre></div>
+
+<ul>
+<li>
+<code>npm test</code> provides a quick, one-run test as defined in <a href="test/karma.conf.js">test/karma.conf.js</a>
+</li>
+<li>
+<code>npm run test:dev</code> opens a Karma instance that watches for file changes, as defined in <a href="test/local.karma.conf.js">test/karma.conf.js</a>
+</li>
+</ul>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/wearefine/fryr">Fryr</a> is maintained by <a href="https://github.com/wearefine">wearefine</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
