@@ -23,7 +23,7 @@
   .gu    { color: $c-gray; } // Generic.Subheading
   .gt    { color: $c-gray; } // Generic.Traceback
   .kc    { font-weight: bold } // Keyword.Constant
-  .kd    { font-weight: bold } // Keyword.Declaration
+  .kd    { color: $c-code-variable; font-weight: bold } // Keyword.Declaration
   .kp    { font-weight: bold } // Keyword.Pseudo
   .kr    { font-weight: bold } // Keyword.Reserved
   .kt    { color: $c-code-regex; font-weight: bold } // Keyword.Type
@@ -61,4 +61,5 @@
   .vg    { color: $c-code-keyword; } // Name.Variable.Global
   .vi    { color: $c-code-keyword; } // Name.Variable.Instance
   .il    { color: $c-code-integer; } // Literal.Number.Integer.Long
+  .p     { color: $c-code-punctuation; } // Punctuation
 }

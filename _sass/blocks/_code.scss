@@ -11,11 +11,13 @@ pre {
   word-wrap: break-word;
   tab-size: 4;
   hyphens: none;
+
 }
 
 :not(pre) > code,
 pre {
   background: $c-code-bg;
+  padding: 0 0.2em;
 }
 
 .highlight {
