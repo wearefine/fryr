@@ -15,7 +15,7 @@ $f-content: $f-lato;
 
 // Global
 $c-gray: #4B4643;
-$c-green: #ADB946;
+$c-green: #bfc751;
 
 // Table
 $c-table-header-bg: #eaeaea;
@@ -23,5 +23,19 @@ $c-table-header-bg: #eaeaea;
 // Code
 $c-code-bg: #f7f7f7;
 $c-code-border: #ccc;
+$c-yellow: #d87c38;
+$c-red: #c92c2c;
+$c-blue: #54a0ab;
+$c-purple: #553b90;
+$c-orange: #eaa572;
+
+$c-code-comment: $c-code-border;
+$c-code-punctuation: $c-gray;
+$c-code-property: $c-red;
+$c-code-integer: $c-orange;
+$c-code-string: $c-green;
+$c-code-variable: $c-purple;
+$c-code-keyword: $c-blue;
+$c-code-regex: $c-orange;
 
 $base-space: 30px;
