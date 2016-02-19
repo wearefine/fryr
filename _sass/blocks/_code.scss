@@ -1,61 +1,25 @@
-code {
-  padding: 2px 4px;
-  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
-  font-size: 0.9rem;
-  color: #383e41;
-  background-color: #f3f6fa;
-  border-radius: 0.3rem;
+code,
+pre {
+  color: $c-black;
+  text-shadow: 0 1px $c-white;
+  font-family: $f-monospace;
+  direction: ltr;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: break-all;
+  word-wrap: break-word;
+  tab-size: 4;
+  hyphens: none;
 }
 
+:not(pre) > code,
 pre {
-  padding: 0.8rem;
-  margin-top: 0;
-  margin-bottom: 1rem;
-  font: 1rem Consolas, "Liberation Mono", Menlo, Courier, monospace;
-  color: #567482;
-  word-wrap: normal;
-  background-color: #f3f6fa;
-  border: solid 1px #dce6f0;
-  border-radius: 0.3rem;
-  overflow: auto;
-  font-size: 0.9rem;
-  line-height: 1.45;
-
-  .highlight & {
-    margin-bottom: 0;
-    word-break: normal;
-  }
-
-  > code {
-    padding: 0;
-    margin: 0;
-    font-size: 0.9rem;
-    color: #567482;
-    word-break: normal;
-    white-space: pre;
-    background: transparent;
-    border: 0;
-  }
-
-  code,
-  tt {
-    display: inline;
-    max-width: initial;
-    padding: 0;
-    margin: 0;
-    overflow: initial;
-    line-height: inherit;
-    word-wrap: normal;
-    background-color: transparent;
-    border: 0;
-
-    &:before,
-    &:after {
-      content: normal;
-    }
-  }
+  background: $c-code-bg;
 }
 
 .highlight {
-  margin-bottom: 1rem;
+  margin-bottom: $base-space;
+  border: 1px dashed $c-code-border;
+  line-height: 1.2;
 }

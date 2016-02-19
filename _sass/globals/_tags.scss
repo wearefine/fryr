@@ -39,18 +39,28 @@ a {
 }
 
 table {
+  text-align: left;
   width: 100%;
-  overflow: auto;
-  word-break: normal;
-  word-break: keep-all;
+}
 
-  th,
-  td {
-    padding: 0.5rem 1rem;
-    border: 1px solid #e9ebec;
-  }
+tbody {
+  tr {
+    transition: background 0.2s;
 
-  th {
-    font-weight: bold;
+    &:hover {
+      background: $c-white;
+    }
   }
+}
+
+th,
+td {
+  border-bottom: 1px solid $c-table-header-bg;
+  padding: 20px
+}
+
+th {
+  text-transform: uppercase;
+  font-size: 11px;
+  background: $c-table-header-bg;
 }

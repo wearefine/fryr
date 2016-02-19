@@ -3,9 +3,19 @@ h2,
 h3,
 h4 {
   font-family: $f-headline;
-  font-weight:normal;
+  font-weight: normal;
   line-height: 1.1;
-  margin: 0 0 40px;
+  margin: $base-space 0 ($base-space / 2);
+  font-weight: 700;
+  border-left: 5px solid $c-green;
+  padding-left: 8px;
+}
+
+h1,
+h2 {
+  border-left: 0;
+  padding: 0 0 9px;
+  border-bottom: 4px solid $c-green;
 }
 
 h1 {
@@ -14,19 +24,16 @@ h1 {
 
 h2 {
   font-size: remCalc(32px);
-  line-height: 1.2;
 }
 
 h3 {
   font-family: $f-content;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
   font-size: remCalc(24px);
 }
 
 h4 {
-  text-transform: uppercase;
   font-family: $f-content;
-  margin: 15px 0;
   font-size: remCalc(18px);
 }
 

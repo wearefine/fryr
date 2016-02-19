@@ -8,14 +8,20 @@ $breakpoints: ();
 // Merge $fine_breakpoints and $breakpoints to use with bp() mixin
 $breakpoints: map-merge($fine-breakpoints, $breakpoints);
 
-//Default colors (doesn't really need to be changed)
-$c-gray: #4B4643;
-
 $f-lato: 'Lato', $f-sans;
 
 $f-headline: $f-lato;
 $f-content: $f-lato;
 
+// Global
+$c-gray: #4B4643;
 $c-green: #ADB946;
+
+// Table
+$c-table-header-bg: #eaeaea;
+
+// Code
+$c-code-bg: #f7f7f7;
+$c-code-border: #ccc;
 
 $base-space: 30px;
