@@ -1,0 +1,24 @@
+<section class="wrapper download">
+  {% include download-js.html %}
+  <a href="{{ site.github.repository_url }}" class="button" title="View {{ site.title }} on GitHub">View on GitHub</a>
+</section>
+
+<footer class="main-footer">
+
+  <div class="wrapper">
+    <nav class="social-media">
+      {% if site.github_username %}
+        {% include icon-github.html username=site.github_username %}
+      {% endif %}
+
+      {% if site.twitter_username %}
+        {% include icon-twitter.html username=site.twitter_username %}
+      {% endif %}
+    </nav>
+
+    <div class="conclusion">
+      Made <a href="{{ site.github.owner_url }}" target="_blank">FINE</a> in Portland
+    </div>
+  </div>
+
+</footer>

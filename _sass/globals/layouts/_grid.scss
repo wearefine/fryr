@@ -1,0 +1,21 @@
+.wrapper {
+  max-width: 720px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.main-header,
+.main-footer {
+  background: $c-green;
+  padding: 20px 0;
+  text-align: center;
+}
+
+.download {
+  padding: $base-space 0;
+  text-align: center;
+
+  .button {
+    margin: 0 5px;
+  }
+}

@@ -1,0 +1,28 @@
+.fine-logo {
+  max-width: 60px;
+  display: block;
+  text-align: left;
+}
+
+.feature {
+  padding: 60px 0 $base-space;
+  color: $c-white;
+
+  p {
+    font-weight: 700;
+    font-size: remCalc(22px);
+  }
+}
+
+.logo {
+  display: block;
+  max-width: 260px;
+  width: 100%;
+  margin: 0 auto $base-space;
+
+  img,
+  svg {
+    width: 100%;
+    height: auto;
+  }
+}

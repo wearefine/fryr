@@ -1,0 +1,56 @@
+* {
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: rgba($c-black, 0);
+  // scss-lint:disable DuplicateProperty
+  -webkit-tap-highlight-color: transparent;
+
+  &,
+  &:before,
+  &:after {
+    box-sizing: border-box;
+  }
+}
+
+html {
+  // scss-lint:disable DuplicateProperty
+  font-size: 100%;
+  font-size: remCalc(16px);
+  height: 100%;
+}
+
+body {
+  height: 100%;
+  font-size: 1rem;
+  line-height: 1.4;
+  position: relative;
+  width: 100%;
+  color: $c-gray;
+  font-family: $f-content;
+}
+
+img {
+  height: auto;
+  max-width: 100%;
+}
+
+a {
+  transition: color 0.2s;
+  text-decoration: none;
+}
+
+table {
+  width: 100%;
+  overflow: auto;
+  word-break: normal;
+  word-break: keep-all;
+
+  th,
+  td {
+    padding: 0.5rem 1rem;
+    border: 1px solid #e9ebec;
+  }
+
+  th {
+    font-weight: bold;
+  }
+}

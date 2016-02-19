@@ -1,0 +1,14 @@
+.button {
+  display: inline-block;
+  padding: 14px 18px;
+  border: 1px solid $c-gray;
+  transition: background 0.3s;
+  color: $c-white;
+  font-weight: 700;
+  text-transform: uppercase;
+  background: $c-gray;
+
+  &:hover {
+    background: lighten($c-gray, 14%);
+  }
+}
