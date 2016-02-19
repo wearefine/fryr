@@ -16,6 +16,7 @@ h2 {
   border-left: 0;
   padding: 0 0 9px;
   border-bottom: 4px solid $c-green;
+  margin-top: $base-space * 2;
 }
 
 h1 {
@@ -28,6 +29,7 @@ h2 {
 
 h3 {
   font-family: $f-content;
+  margin-top: 40px;
   margin-bottom: 10px;
   font-size: remCalc(24px);
 }
