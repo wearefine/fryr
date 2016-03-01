@@ -1,4 +1,8 @@
-/* Version 1.2.0 */
+/*!
+ * Fryr v1.2.1
+ * Command location.hash like a cook in the kitchen
+ * MIT License
+ */
 
 (function (window, factory) {
   'use strict';
@@ -222,6 +226,13 @@
   }
 
   /**
+   * Private variable used to hold the callback function
+   * Necessary for the destory method when we decouple the event listener
+   * @type {Function}
+   */
+  var privateCallback;
+
+  /**
    * Call once to initialize filtering
    * @param {Function} hashChangeCallback - Called on every hashchange
    *   @param {Object} Updated params
@@ -233,15 +244,19 @@
     defaults = setDefault(defaults, {});
     call_on_init = setDefault(call_on_init, true);
 
-    this.callback = hashChangeCallback;
-
     /**
      * Very important object holder
      * @type {Object}
      */
     this.params = {};
 
-    window.addEventListener('hashchange', privateHashChange.bind(this));
+    this.callback = hashChangeCallback;
+
+    // Function must be stored to a variable (since it's bound) so it can be removed on `.destroy`
+    // TODO - there's probably a cleaner, simpler way of doing this without `.bind`
+    privateCallback = privateHashChange.bind(this);
+
+    window.addEventListener('hashchange', privateCallback);
 
     // Apply defaults (if present) to hash, which will file window.onhashchange
     if( Object.keys(defaults).length && window.location.hash === '' ) {
@@ -414,7 +429,7 @@
   Fryr.prototype.destroy = function(retain_hash){
     retain_hash = setDefault(retain_hash, false);
 
-    window.removeEventListener('hashchange', privateHashChange);
+    window.removeEventListener('hashchange', privateCallback);
 
     if(!retain_hash) {
       window.location.hash = '';

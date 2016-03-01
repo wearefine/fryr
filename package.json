@@ -1,7 +1,7 @@
 {
   "name": "fryr",
-  "version": "1.1.0",
-  "description": "Command window.location.hash like a cook in a kitchen",
+  "version": "1.2.1",
+  "description": "Command location.hash like a cook in the kitchen",
   "main": "fryr.js",
   "directories": {
     "test": "test"
