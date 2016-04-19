@@ -9,6 +9,27 @@ describe('Fryr', function() {
     fry = new Fryr(callbackFunction);
   });
 
+  describe('initialization', function() {
+
+    it('should be defined', function () {
+      expect(Fryr).toBeDefined();
+    });
+
+    it('should bind the callback to initialization', function() {
+      var callback_this;
+
+      fry = new Fryr(function(params) {
+        callback_this = this;
+      });
+
+      window.location.hash = '#?location=dentist';
+
+      expect(callback_this).toEqual(jasmine.any(Fryr));
+      expect(callback_this).toEqual(fry);
+    });
+
+  });
+
   describe('.update()', function() {
 
     it('should add key when key is nonexistent', function() {
