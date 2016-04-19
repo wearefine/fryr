@@ -1,5 +1,5 @@
 /*!
- * Fryr v1.2.1
+ * Fryr v1.2.2
  * Command location.hash like a cook in the kitchen
  * MIT License
  */
