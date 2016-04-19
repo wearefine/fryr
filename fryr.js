@@ -73,10 +73,8 @@
     // Key is included in search in case multiple keys have the same value
     hash = hash.replace(regex_match[0], regex_match[1]);
 
-    // Remove trailing commas
-    hash = hash.replace(/,&/g, '&');
-    hash = hash.replace(/,$/, '');
-    hash = hash.replace(/=\,/g, '=');
+    // Remove trailing commas, ,&, and =,
+    hash = hash.replace(/,$|(,(?=&))|((?==),)/, '')
 
     removeHashIfBlank(hash);
   }
