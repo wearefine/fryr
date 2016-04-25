@@ -1,5 +1,5 @@
 /*!
- * Fryr v1.2.1
+ * Fryr v1.2.2
  * Command location.hash like a cook in the kitchen
  * MIT License
  */
@@ -17,6 +17,13 @@
 
 })(window, function factory(window) {
   'use strict';
+
+  /**
+   * Private variable used to hold the callback function
+   * Necessary for the destory method when we decouple the event listener
+   * @type {Function}
+   */
+  var hashCallback;
 
   /**
    * Remove all traces of a hash if it's blank
@@ -66,10 +73,8 @@
     // Key is included in search in case multiple keys have the same value
     hash = hash.replace(regex_match[0], regex_match[1]);
 
-    // Remove trailing commas
-    hash = hash.replace(/,&/g, '&');
-    hash = hash.replace(/,$/, '');
-    hash = hash.replace(/=\,/g, '=');
+    // Remove trailing commas, ,&, and =,
+    hash = hash.replace(/,$|(,(?=&))|((?==),)/, '')
 
     removeHashIfBlank(hash);
   }
@@ -216,23 +221,6 @@
   }
 
   /**
-   * Callback with new params. Callback defined in initialization
-   * @private
-   * @fires hashChangeCallback
-   */
-  function privateHashChange() {
-    var params = this.parse();
-    this.callback.call(this, params);
-  }
-
-  /**
-   * Private variable used to hold the callback function
-   * Necessary for the destory method when we decouple the event listener
-   * @type {Function}
-   */
-  var privateCallback;
-
-  /**
    * Call once to initialize filtering
    * @param {Function} hashChangeCallback - Called on every hashchange
    *   @param {Object} Updated params
@@ -244,19 +232,28 @@
     defaults = setDefault(defaults, {});
     call_on_init = setDefault(call_on_init, true);
 
+    // Set for the privateHashChange
+    var _this = this;
+
     /**
      * Very important object holder
      * @type {Object}
      */
     this.params = {};
 
-    this.callback = hashChangeCallback;
+    /**
+     * Callback with new params. Callback defined in initialization
+     * @private
+     * @fires hashChangeCallback
+     */
+    function privateHashChange() {
+      var params = _this.parse();
+      hashChangeCallback.call(_this, params);
+    }
 
-    // Function must be stored to a variable (since it's bound) so it can be removed on `.destroy`
-    // TODO - there's probably a cleaner, simpler way of doing this without `.bind`
-    privateCallback = privateHashChange.bind(this);
+    hashCallback = privateHashChange;
 
-    window.addEventListener('hashchange', privateCallback);
+    window.addEventListener('hashchange', hashCallback);
 
     // Apply defaults (if present) to hash, which will file window.onhashchange
     if( Object.keys(defaults).length && window.location.hash === '' ) {
@@ -271,168 +268,171 @@
     return this;
   }
 
-  /**
-   * Replace key/value if present in hash; add key/value if not present in hash
-   * @param {String} key - Param key to query against
-   * @param {String|Number} value - Value for param key
-   * @param {Boolean} [key_is_required=false] - if the key is not required, it will be removed from the hash
-   * @see {@link Fryr#append}
-   */
-  Fryr.prototype.update = function(key, value, key_is_required) {
-    key_is_required = setDefault(key_is_required, false);
-    update(key, value, key_is_required, true);
-  };
+  Fryr.prototype = {
 
-  /**
-   * Add value to key's value in a comma-delineated list if it's not present in hash
-   * @param {String} key - Param key to query against
-   * @param {String|Number} value - Value for param key
-   * @see {@link Fryr#update}
-   */
-  Fryr.prototype.append = function(key, value) {
-    update(key, value, false, false);
-  };
+    /**
+     * Replace key/value if present in hash; add key/value if not present in hash
+     * @param {String} key - Param key to query against
+     * @param {String|Number} value - Value for param key
+     * @param {Boolean} [key_is_required=false] - if the key is not required, it will be removed from the hash
+     * @see {@link Fryr#append}
+     */
+    update: function(key, value, key_is_required) {
+      key_is_required = setDefault(key_is_required, false);
+      update(key, value, key_is_required, true);
+    },
 
-  /**
-   * Evaluate the hash
-   * @return {Object} Key/value hash of the hash broken down by params
-   */
-  Fryr.prototype.parse = function() {
-    var hash = window.location.hash;
-    var params;
+    /**
+     * Add value to key's value in a comma-delineated list if it's not present in hash
+     * @param {String} key - Param key to query against
+     * @param {String|Number} value - Value for param key
+     * @see {@link Fryr#update}
+     */
+    append: function(key, value) {
+      update(key, value, false, false);
+    },
 
-    // clear zombie keys and values
-    this.params = {};
+    /**
+     * Evaluate the hash
+     * @return {Object} Key/value hash of the hash broken down by params
+     */
+    parse: function() {
+      var hash = window.location.hash;
+      var params;
 
-    if(window.location.hash && /\?/g.test(hash)) {
-      params = hash.split('?')[1];
-      params = params.split('&');
+      // clear zombie keys and values
+      this.params = {};
 
-      // Separate params into key values
-      for(var i = 0; i < params.length; i++) {
-        var key_value = params[i].split('=');
-        var key = key_value[0];
-        var value = key_value[1];
+      if(window.location.hash && /\?/g.test(hash)) {
+        params = hash.split('?')[1];
+        params = params.split('&');
 
-        this.params[key] = value;
-      }
-    }
+        // Separate params into key values
+        for(var i = 0; i < params.length; i++) {
+          var key_value = params[i].split('=');
+          var key = key_value[0];
+          var value = key_value[1];
 
-    return this.params;
-  };
-
-  /**
-   * Change a JSON object into a string for the hash
-   * @param {Object|String} obj - object to convert
-   * @return {String|Boolean} For use in window.location.hash. Returns false if param is not object or string
-   */
-  Fryr.prototype.convert = function(obj) {
-    if( obj.constructor === String ) {
-      obj = JSON.parse(obj);
-    }
-
-    // Escape if we're not dealing with an object
-    if( obj.constructor !== Object ) {
-      return false;
-    }
-
-    var keys = Object.keys(obj);
-    // Set start with a ?
-    var new_hash = '?';
-
-    // Loop through all keys in the obj
-    for(var i = 0; i < keys.length; i++) {
-      var key = keys[i];
-      var value = obj[ key ];
-
-      if( value.constructor === Array ) {
-        value = value.join(',');
-      }
-
-      // On next key, if it isn't the first, precede with an ampersand
-      if(new_hash !== '?') {
-        new_hash += '&';
-      }
-
-      // Append key/value to new_hash
-      new_hash += key + '=' + value;
-    }
-
-    return new_hash;
-  };
-
-  /**
-   * Wipe out or selectively replace keys in params
-   * @param {Object|String} obj - Query to replace
-   * @param {Boolean} [replace_all=false] - Whether or not to blast existing params away or replace only changed keys
-   * @fires window.onhashchange
-   * @return {String} The new hash
-   */
-  Fryr.prototype.merge = function(obj, replace_all) {
-    replace_all = setDefault(replace_all, false);
-
-    // If it's a string, convert to an object
-    if( obj.constructor === String ) {
-      obj = JSON.parse(obj);
-    }
-
-    // Override or add key values from existing params and put them into the object
-    if( !replace_all ) {
-      var new_params = this.parse();
-
-      var keys = Object.keys(new_params);
-
-      for(var i = 0; i < keys.length; i++) {
-        var key = keys[i];
-        var value = new_params[ key ];
-
-        if(!obj.hasOwnProperty(key)) {
-          obj[key] = value;
+          this.params[key] = value;
         }
       }
-    }
 
-    // Change hash to string; if replace_all is false, original value is used
-    var new_hash = this.convert(obj);
+      return this.params;
+    },
 
-    window.location.hash = '#' + new_hash;
+    /**
+     * Change a JSON object into a string for the hash
+     * @param {Object|String} obj - object to convert
+     * @return {String|Boolean} For use in window.location.hash. Returns false if param is not object or string
+     */
+    convert: function(obj) {
+      if( obj.constructor === String ) {
+        obj = JSON.parse(obj);
+      }
 
-    return new_hash;
-  };
+      // Escape if we're not dealing with an object
+      if( obj.constructor !== Object ) {
+        return false;
+      }
 
-  /**
-   * Retrieve a key's value
-   * @param {String} key - Param to target
-   * @example
-   * window.location.hash = '?color=blue'
-   * fryr.param('color') // => 'blue'
-   * @return {String} The value of the key
-   */
-  Fryr.prototype.param = function(key) {
-    return param(key);
-  };
+      var keys = Object.keys(obj);
+      // Set start with a ?
+      var new_hash = '?';
 
-  /**
-   * Determine if param is blank or undefined
-   * @param {String} key - Param to target
-   * @return {Boolean}
-   */
-  Fryr.prototype.paramPresent = function(key) {
-    var value = this.params[key];
-    return (typeof value !== 'undefined' && value !== '');
-  };
+      // Loop through all keys in the obj
+      for(var i = 0; i < keys.length; i++) {
+        var key = keys[i];
+        var value = obj[ key ];
 
-  /**
-   * Destroy current initialization, unbind hashchange listener, and reset the hash to an empty state
-   * @param {Boolean} [retain_hash=false] - Keep items in hash
-   */
-  Fryr.prototype.destroy = function(retain_hash){
-    retain_hash = setDefault(retain_hash, false);
+        if( value.constructor === Array ) {
+          value = value.join(',');
+        }
 
-    window.removeEventListener('hashchange', privateCallback);
+        // On next key, if it isn't the first, precede with an ampersand
+        if(new_hash !== '?') {
+          new_hash += '&';
+        }
 
-    if(!retain_hash) {
-      window.location.hash = '';
+        // Append key/value to new_hash
+        new_hash += key + '=' + value;
+      }
+
+      return new_hash;
+    },
+
+    /**
+     * Wipe out or selectively replace keys in params
+     * @param {Object|String} obj - Query to replace
+     * @param {Boolean} [replace_all=false] - Whether or not to blast existing params away or replace only changed keys
+     * @fires window.onhashchange
+     * @return {String} The new hash
+     */
+    merge: function(obj, replace_all) {
+      replace_all = setDefault(replace_all, false);
+
+      // If it's a string, convert to an object
+      if( obj.constructor === String ) {
+        obj = JSON.parse(obj);
+      }
+
+      // Override or add key values from existing params and put them into the object
+      if( !replace_all ) {
+        var new_params = this.parse();
+
+        var keys = Object.keys(new_params);
+
+        for(var i = 0; i < keys.length; i++) {
+          var key = keys[i];
+          var value = new_params[ key ];
+
+          if(!obj.hasOwnProperty(key)) {
+            obj[key] = value;
+          }
+        }
+      }
+
+      // Change hash to string; if replace_all is false, original value is used
+      var new_hash = this.convert(obj);
+
+      window.location.hash = '#' + new_hash;
+
+      return new_hash;
+    },
+
+    /**
+     * Retrieve a key's value
+     * @param {String} key - Param to target
+     * @example
+     * window.location.hash = '?color=blue'
+     * fryr.param('color') // => 'blue'
+     * @return {String} The value of the key
+     */
+    param: function(key) {
+      return param(key);
+    },
+
+    /**
+     * Determine if param is blank or undefined
+     * @param {String} key - Param to target
+     * @return {Boolean}
+     */
+    paramPresent: function(key) {
+      var value = this.params[key];
+      return (typeof value !== 'undefined' && value !== '');
+    },
+
+    /**
+     * Destroy current initialization, unbind hashchange listener, and reset the hash to an empty state
+     * @param {Boolean} [retain_hash=false] - Keep items in hash
+     */
+    destroy: function(retain_hash){
+      retain_hash = setDefault(retain_hash, false);
+
+      window.removeEventListener('hashchange', hashCallback);
+
+      if(!retain_hash) {
+        window.location.hash = '';
+      }
     }
   };
 
