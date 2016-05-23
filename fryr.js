@@ -182,7 +182,9 @@
 
           // Otherwise remove the vanilla value
           } else {
-            removeValue(key, value);
+            if(key_value !== value) {
+              removeValue(key, value);
+            }
 
           }
 
