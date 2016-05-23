@@ -180,9 +180,9 @@
           if(value === '') {
             removeValue(key, key_value);
 
-          // Otherwise remove the vanilla value
+          // Otherwise remove the vanilla value if it's different than the original value or value should not be replaced (appended)
           } else {
-            if(key_value !== value) {
+            if(key_value !== value || !should_replace_value) {
               removeValue(key, value);
             }
 

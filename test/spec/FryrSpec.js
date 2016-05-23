@@ -230,6 +230,13 @@ describe('Fryr', function() {
         expect(window.location.hash).toEqual('#?character=marlin,nemo');
       });
 
+      it('should remove key and value when toggled with same value', function() {
+        window.location.hash = '#?character=marlin';
+        fry.append('character', 'marlin');
+
+        expect(window.location.hash).toEqual('');
+      });
+
     });
 
   });
