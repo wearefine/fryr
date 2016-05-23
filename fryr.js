@@ -117,8 +117,6 @@
     // if initial key removed, replace ampersand with question
     hash = hash.replace('#&', '#?');
 
-    console.log('sup')
-
     removeHashIfBlank(hash);
   }
 
