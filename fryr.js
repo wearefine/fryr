@@ -34,21 +34,15 @@
    */
   function removeHashIfBlank(hash) {
     if(hash === '#') {
-      // Modern browsers
-      if ('pushState' in history) {
-        history.pushState('', document.title, window.location.pathname + window.location.search);
+      // Prevent scrolling by storing the page's current scroll offset
+      var scrollV = document.body.scrollTop;
+      var scrollH = document.body.scrollLeft;
 
-      } else {
-        // Prevent scrolling by storing the page's current scroll offset
-        var scrollV = document.body.scrollTop;
-        var scrollH = document.body.scrollLeft;
+      window.location.hash = '';
 
-        window.location.hash = '';
-
-        // Restore the scroll offset
-        document.body.scrollTop = scrollV;
-        document.body.scrollLeft = scrollH;
-      }
+      // Restore the scroll offset
+      document.body.scrollTop = scrollV;
+      document.body.scrollLeft = scrollH;
 
     } else {
       // If the hash isn't blank, fire onhashchange
@@ -123,6 +117,8 @@
     // if initial key removed, replace ampersand with question
     hash = hash.replace('#&', '#?');
 
+    console.log('sup')
+
     removeHashIfBlank(hash);
   }
 
@@ -188,9 +184,7 @@
 
           // Otherwise remove the vanilla value
           } else {
-            if(key_value !== value) {
-              removeValue(key, value);
-            }
+            removeValue(key, value);
 
           }
 
@@ -210,7 +204,7 @@
     // Add key if it doesn't exist
     } else {
 
-      if(window.location.hash) {
+      if(window.location.hash && window.location.hash !== '#') {
         window.location.hash += '&' + key + '=' + value;
       } else {
         // Use a question mark if first key
