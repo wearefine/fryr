@@ -52,6 +52,20 @@ describe('Fryr', function() {
       expect(window.location.hash).toEqual('#?location=eac,dentist&character=nemo');
     });
 
+    it('should replace values when update value is different', function() {
+      window.location.hash = '#?location=dentist';
+      fry.update('location', 'ocean');
+
+      expect(window.location.hash).toEqual('#?location=ocean');
+    });
+
+    it('should replace values when update value is slightly different', function() {
+      window.location.hash = '#?location=dentist';
+      fry.update('location', 'dentis');
+
+      expect(window.location.hash).toEqual('#?location=dentis');
+    });
+
     it('should not replace values when update value is the same', function() {
       window.location.hash = '#?location=dentist';
       fry.update('location', 'dentist');

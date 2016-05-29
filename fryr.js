@@ -165,39 +165,32 @@
     if(hash.indexOf(key) !== -1) {
       var key_value = param(key);
 
-      var regex_for_value = new RegExp(value, 'g');
+      // If the key is required or value isn't blank and is not in key_value
+      var value_not_in_key_value = key_value.split(',').indexOf(value) === -1;
+      if (key_is_required || (value_not_in_key_value && value !== '')) {
 
-      // If key_value contains the new value
-      if(regex_for_value.test(key_value)) {
+        // add the value, replacing it if necessary
+        addValue(key, value, should_replace_value);
 
-        // If key is required, swap it out
-        if(key_is_required) {
-          addValue(key, value, should_replace_value);
+      } else {
 
+        // If the value is blank, remove the original value from the key
+        if(value === '') {
+          removeValue(key, key_value);
+
+        // Otherwise remove the vanilla value if it's different than the original value
+        // or value should not be replaced (appended)
         } else {
-
-          // If the value is blank, remove the original value from the key
-          if(value === '') {
-            removeValue(key, key_value);
-
-          // Otherwise remove the vanilla value if it's different than the original value or value should not be replaced (appended)
-          } else {
-            if(key_value !== value || !should_replace_value) {
-              removeValue(key, value);
-            }
-
-          }
-
-          // If key's value is blank, remove it from hash
-          if(param(key) === '') {
-            removeKey(key);
+          if(key_value !== value || !should_replace_value) {
+            removeValue(key, value);
           }
 
         }
 
-      // key_value does not contain the new value
-      } else {
-        addValue(key, value, should_replace_value);
+        // If key's value is blank, remove it from hash
+        if(param(key) === '') {
+          removeKey(key);
+        }
 
       }
 
