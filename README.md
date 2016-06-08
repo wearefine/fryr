@@ -5,23 +5,31 @@
 Fryr is the fry cook you never knew you needed to turn that ugly, frozen hash into pretty, delectably digestable params. Not only does it make params accessible for use on the client-side, it also adds, removes, and updates them.
 
 ```javascript
-// ...com/#?tankhood=gill,deb,bloat
+// visit mysite.com/#?tankhood=gill,deb,bloat
 
+// define new instance of Fryr with callback
 var fry = new Fryr(callback);
+
+// callback is called on hashchange
+function callback() {
+  // do something with this.params, like refreshing content
+};
+// or access params outside of the callback
 fry.params;
 // => { 'tankhood' : 'gill,deb,bloat' }
 
-fry.update('tankhood', 'nemo');
-// => ...com/#?tankhood=gill,deb,bloat,nemo
+// then update params at will
+fry.update('home', 'reef');
+// => ...com/#?tankhood=gill,deb,bloat&home=reef
+fry.append('tankhood', 'nemo');
+// => ...com/#?tankhood=gill,deb,bloat,nemo&home=reef
 ```
 
-## Quick Start
-
-1. `//= require fryr`
-1. Call `new Fryr` with a callback function
-1. PROFIT BYAH
-
 ## Initialization
+
+```javascript
+var fry = new Fryr(hashChangeCallback, defaults, call_on_init);
+```
 
 | Arg | Type | Default | Description |
 |---|---|---|---|
