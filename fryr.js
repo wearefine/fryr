@@ -242,12 +242,14 @@
 
     window.addEventListener('hashchange', hashCallback);
 
+    var has_hash_on_load = window.location.hash.length > 2;
+
     // Apply defaults (if present) to hash, which will file window.onhashchange
-    if( Object.keys(defaults).length && window.location.hash === '' ) {
+    if( Object.keys(defaults).length && !has_hash_on_load ) {
       this.merge(defaults, true);
 
     // Execute the callback on load
-    } else if(call_on_init) {
+    } else if(call_on_init || has_hash_on_load) {
       privateHashChange.call(this);
 
     }
