@@ -1,9 +1,16 @@
 language: node_js
 node_js:
-  - "0.10"
-
+- '0.10'
 before_install:
-  - wget https://s3.amazonaws.com/travis-phantomjs/phantomjs-2.0.0-ubuntu-12.04.tar.bz2
-  - tar -xjf phantomjs-2.0.0-ubuntu-12.04.tar.bz2
-  - sudo rm -rf /usr/local/phantomjs/bin/phantomjs
-  - sudo mv phantomjs /usr/local/phantomjs/bin/phantomjs
+- wget https://s3.amazonaws.com/travis-phantomjs/phantomjs-2.0.0-ubuntu-12.04.tar.bz2
+- tar -xjf phantomjs-2.0.0-ubuntu-12.04.tar.bz2
+- sudo rm -rf /usr/local/phantomjs/bin/phantomjs
+- sudo mv phantomjs /usr/local/phantomjs/bin/phantomjs
+
+env:
+  global:
+    secure: X8qlnscLWYVyVEP0hZejvC5QGQfj4MMrhl5HJgBzFy8BtQaQHdkGd+uI+ERYrJSKH1Aje6B5ebbJvZwVlwJV0V3/6e7WDTRWgrWisUnfZKlg/nUjWaFJ4AU3K0q2RZP6LR1ZH1l04jcn1ZKQ6nIQaaze1g2zJXmeSLz13W80ZxOVNAqrgjXo9leFdTUVzwlQnAKqJjQ83o3JwgUjmRyl/kP6oLWgx2eqvNzc6yMVBw9rxrhhCU1J95Xl9Nb1P2HWYQ9YMzRBPeDXpTPnkqzsjgsyuXcYZG8wCinYSBcoUj6ouyU//V6nxfAlbUuX3tWs+Q9By9NJusD07lNdnD7pni0X5xNDNECfVxx8a3p8xkFSVDicT7LDKAaOdpQ1LjC5JDWNx/wqaVJ0zvi3pvSnUXvXDWFB8W5ekZy02DQVb55gtw0FL9gG5zFnzvsaaAbp+FeTcNhxtaidoGjOIdu5aoWv+h3ftGxjADfC2BGPl1hI0Xq9dvAqnAlq63J9EQjP5/SK1HQAsmYW3ZQu5rF18UJYJ6hKzbKv8yh4/JG6z6VAa4r3ffCzHTXWNXiczXk2eGjQpTSteyKcZ7opvls9Hvd4UDqoNzsPdenTChW9RhwMetpaYdiPvekpsBYv5gkQTa9xrHYacbWCTdfRxlofyFnWpbQRjfBGrMEx6e1QhEI=
+
+after_success:
+- chmod ugo+x notify.sh
+- '[ "${TRAVIS_PULL_REQUEST}" != "false" ] || ./notify.sh'
