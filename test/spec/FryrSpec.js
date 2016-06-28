@@ -360,6 +360,14 @@ describe('Fryr', function() {
       expect(str).toEqual('?character=dory&location=dentist');
     });
 
+    it('should delete empty hash values', function() {
+      window.location.hash = '#?location=dentist&character=nemo';
+      var obj = { 'location' : '' };
+      var str = fry.merge(obj);
+
+      expect(str).toEqual('?character=nemo');
+    });
+
   });
 
   describe('.destroy()', function() {
