@@ -35,14 +35,14 @@
   function removeHashIfBlank(hash) {
     if(hash === '#') {
       // Prevent scrolling by storing the page's current scroll offset
-      var scrollV = document.body.scrollTop;
-      var scrollH = document.body.scrollLeft;
+      var scrollV = document.documentElement.scrollTop;
+      var scrollH = document.documentElement.scrollLeft;
 
       window.location.hash = '';
 
       // Restore the scroll offset
-      document.body.scrollTop = scrollV;
-      document.body.scrollLeft = scrollH;
+      document.documentElement.scrollTop = scrollV;
+      document.documentElement.scrollLeft = scrollH;
 
     } else {
       // If the hash isn't blank, fire onhashchange
